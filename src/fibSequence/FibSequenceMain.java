@@ -1,9 +1,6 @@
 package fibSequence;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
-
 import userInput.UserInput;
 
 /*Enter a number and have the program generate the 
@@ -23,16 +20,18 @@ public class FibSequenceMain {
 		
 		initialInput.setString(initialInput.userInput.nextLine());
 		
-		while(!initialInput.checkIfValid(initialInput.getString())) {
+		while(!initialInput.checkIfValidNumber(initialInput.getString())) {
+			System.out.println("Not a valid number, please input a number");
 			initialInput.setString(initialInput.userInput.nextLine());
 		}
 		
-		System.out.println("Now how many iterations of this numbe do "
+		System.out.println("Now how many iterations of this number do "
 				+ "you wish to go through?");
 		
 		iterationInput.setString(initialInput.userInput.nextLine());
 		
-		while(!iterationInput.checkIfValid(iterationInput.getString())) {
+		while(!iterationInput.checkIfValidNumber(iterationInput.getString())) {
+			System.out.println("Not a valid number, please input a number");
 			iterationInput.setString(initialInput.userInput.nextLine());
 		}
 		
@@ -48,10 +47,13 @@ public class FibSequenceMain {
 		System.out.print(initialInput.getString() + " ");
 		for (int i = 0; i< storage.size(); i++) {
 			System.out.print(storage.get(i) + " ");
+		
 			if (i % 15 == 0 && i > 1) {
 				System.out.println("");
 			}
 		}
+		
+		
 	}
 	
 	

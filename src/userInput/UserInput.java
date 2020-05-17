@@ -1,6 +1,5 @@
 package userInput;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInput {
@@ -23,15 +22,16 @@ public class UserInput {
 		this.string = string;
 	}
 	
-	public boolean checkIfValid(String input) {
+	public boolean checkIfValidNumber(String input) {
 		try {
 			Integer.parseInt(input);
 		}catch (NumberFormatException e) {
-			System.out.println("Not a valid number, please input a number");
 			return false;
 		}
 		return true;
 		
 	}
+	
+	
 	
 }
