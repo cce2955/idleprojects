@@ -11,7 +11,7 @@ public class VowelCheckerMain {
 		System.out.println("Input a string and I can count how many vowels are "
 				+ "there.");
 		input.setString(input.userInput.nextLine());
-		counter.findVowels(input.getString());
+		counter.findVowels(input.getString().toLowerCase());
 		System.out.println("In your phrase, there are ");
 		for (int i = 0; i < counter.vowelCounter.size(); i++) {
 			System.out.print(" [" + counter.vowelCounter.get(i) + "] " +
