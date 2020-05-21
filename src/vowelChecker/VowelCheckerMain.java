@@ -5,6 +5,8 @@ import userInput.UserInput;
 public class VowelCheckerMain {
 	VowelCounter counter = new VowelCounter();
 	UserInput input = new UserInput();
+	private boolean validInput;
+	
 	public void checkVowels() {
 		int sum = 0;
 		String[] arr = {"A", "E", "I", "O", "U"};
@@ -18,8 +20,13 @@ public class VowelCheckerMain {
 		arr[i] +"'s ");
 			sum += counter.vowelCounter.get(i);
 		}
-		
-		
 		System.out.println(", which is a total of " + sum + " vowels");
+	}
+	
+	public boolean isValidInput() {
+		return validInput;
+	}
+	public void setValidInput(boolean validInput) {
+		this.validInput = validInput;
 	}
 }

@@ -18,6 +18,8 @@ import javax.swing.plaf.metal.OceanTheme;
 
 import fibSequence.FibSequenceGui;
 import userInput.UserInput;
+import vowelChecker.VowelCheckerGui;
+import vowelChecker.VowelCounter;
 
 
 
@@ -37,6 +39,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	ProjectType projectType;
 	FibSequenceGui fibGui = new FibSequenceGui();
 	UserInput buttonInput = new UserInput();
+	VowelCheckerGui vowelChecker = new VowelCheckerGui();
 	@SuppressWarnings("deprecation")
 	
 	public WindowMain(){
@@ -138,7 +141,6 @@ public class WindowMain extends JFrame implements ActionListener{
 		  case "Vowel Counter":
 			  projectType = ProjectType.VOWEL;
 			  action(projectType, null);
-			  t.setText("Vowel Counter");
 			  break;			
 		  default:
 			  t.setText("Welcome to the Main Menu");
@@ -151,9 +153,12 @@ public class WindowMain extends JFrame implements ActionListener{
 		 
 		 
 		 switch(type) {
+		 
 		 case MAIN:
 			 System.out.println("Hit main");
 			 break;
+		
+			 
 		 case FIB:
 			 fibGui.setFirstVar(true);
 			 if(fibGui.isFirstVar()) {
@@ -177,13 +182,23 @@ public class WindowMain extends JFrame implements ActionListener{
 				 }
 			 }
 			 
-			 
 			 break;
+		
 		 case VOWEL:
-			 System.out.println("Vowel");
-			 break;
+			 if(!vowelChecker.isValidInput()) {
+				 t.setText("Input a string and I can count how many vowels are "
+							+ "there.");
+				 vowelChecker.setValidInput(true);
+			 }
+
+			 if(vowelChecker.isValidInput()) {
+				 t.setText(vowelChecker.returnVowels(input));
+				 
+			 }
+			 
+			  break;
 		 default:
-			 System.out.println("Still getting there");
+			 System.out.println("You have reached an unreachable area somehow");
 		 }
 		
 	 }
