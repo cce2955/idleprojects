@@ -2,24 +2,14 @@ package window;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-
-import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
@@ -27,6 +17,9 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
 import fibSequence.FibSequenceGui;
+import userInput.UserInput;
+
+
 
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
@@ -43,6 +36,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	JMenuBar mb;
 	ProjectType projectType;
 	FibSequenceGui fibGui = new FibSequenceGui();
+	UserInput buttonInput = new UserInput();
 	@SuppressWarnings("deprecation")
 	
 	public WindowMain(){
@@ -108,8 +102,9 @@ public class WindowMain extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				//Hitting the OK button will sort the commands
 				//by Enum then perform the necessary actions
-				String input = e.getActionCommand();
-				action(projectType);
+				String input = t.getText();
+			
+				action(projectType, input.trim());
 				
 			}
 		});
@@ -127,18 +122,22 @@ public class WindowMain extends JFrame implements ActionListener{
         
         f.setDefaultCloseOperation(EXIT_ON_CLOSE);
     } 
+	
 	 public void actionPerformed(ActionEvent e) {
 		  String s = e.getActionCommand();
 		  switch(s) {
 		  case "Main":
+			  projectType = ProjectType.MAIN;
 			  t.setText("Welcome to the Main Menu");
-			  action(ProjectType.MAIN);
+			  action(projectType, null);
 			  break;
 		  case "Fibonacci Generator":
-			  action(ProjectType.FIB);
+			  projectType = ProjectType.FIB;
+			  action(projectType, null);
 			  break;
 		  case "Vowel Counter":
-			  action(ProjectType.VOWEL);
+			  projectType = ProjectType.VOWEL;
+			  action(projectType, null);
 			  t.setText("Vowel Counter");
 			  break;			
 		  default:
@@ -148,13 +147,37 @@ public class WindowMain extends JFrame implements ActionListener{
 		  }
 	    }
 	 
-	 public void action(ProjectType type) {
+	 public void action(ProjectType type, String input) {
+		 
+		 
 		 switch(type) {
 		 case MAIN:
 			 System.out.println("Hit main");
 			 break;
 		 case FIB:
-			 fibGui.test();
+			 fibGui.setFirstVar(true);
+			 if(fibGui.isFirstVar()) {
+			 t.setText("I'm going to generate a Fibonacci Sequence, \n"
+			 		+ " please input the number you wish to iterate over");
+			 fibGui.inputOne(input);
+			 }
+			 if(!fibGui.isFirstVar()) {
+				 t.setText("How many iterations do you require?");
+				 if(fibGui.getInputNum() != 0 && fibGui.getIterationNum() !=0) {
+					 fibGui.fibGenerator(fibGui.getInputNum(), fibGui.getIterationNum());
+					 t.setText("With a starting number of: " + fibGui.getInputNum() +
+							 " over an iteration of " + fibGui.getIterationNum() +
+							 " gives us: \n" + fibGui.getInputNum() + " " +
+							 fibGui.arrayToString());
+					 
+					fibGui.fibArray.clear();
+					fibGui.setFirstVar(true);
+				 }else {
+					 fibGui.inputTwo(input);
+				 }
+			 }
+			 
+			 
 			 break;
 		 case VOWEL:
 			 System.out.println("Vowel");
@@ -164,4 +187,5 @@ public class WindowMain extends JFrame implements ActionListener{
 		 }
 		
 	 }
+	 
 }
