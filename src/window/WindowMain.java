@@ -17,6 +17,7 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
 import fibSequence.FibSequenceGui;
+import textEditor.TextEditorMain;
 import userInput.UserInput;
 import vowelChecker.VowelCheckerGui;
 import vowelChecker.VowelCounter;
@@ -25,7 +26,7 @@ import vowelChecker.VowelCounter;
 
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
-		MAIN, DEBUG, FIB, VOWEL;
+		MAIN, DEBUG, FIB, VOWEL,TEXT;
 	}
 	private static final long serialVersionUID = 1L;
 	
@@ -40,6 +41,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	FibSequenceGui fibGui = new FibSequenceGui();
 	UserInput buttonInput = new UserInput();
 	VowelCheckerGui vowelChecker = new VowelCheckerGui();
+	
 	@SuppressWarnings("deprecation")
 	
 	public WindowMain(){
@@ -141,7 +143,11 @@ public class WindowMain extends JFrame implements ActionListener{
 		  case "Vowel Counter":
 			  projectType = ProjectType.VOWEL;
 			  action(projectType, null);
-			  break;			
+			  break;
+		  case "Text Editor":
+			  projectType = ProjectType.TEXT;
+			  action(projectType, null);
+			  break;
 		  default:
 			  t.setText("Welcome to the Main Menu");
 			  break;
@@ -195,7 +201,9 @@ public class WindowMain extends JFrame implements ActionListener{
 				 t.setText(vowelChecker.returnVowels(input));
 				 
 			 }
+		 case TEXT:
 			 
+			 TextEditorMain texteditor = new TextEditorMain();
 			  break;
 		 default:
 			 System.out.println("You have reached an unreachable area somehow");
