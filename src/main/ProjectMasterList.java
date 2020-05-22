@@ -3,7 +3,6 @@ package main;
 import java.util.ArrayList;
 
 import fibSequence.FibSequenceMain;
-import textEditor.TextEditorMain;
 import userInput.UserInput;
 import vowelChecker.VowelCheckerMain;
 
@@ -25,7 +24,6 @@ public class ProjectMasterList {
 				checker.checkVowels();
 				break;
 			case 3:
-				TextEditorMain textEditor = new TextEditorMain();
 				
 		}
 	}

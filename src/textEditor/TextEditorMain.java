@@ -174,7 +174,8 @@ public class TextEditorMain extends JFrame implements ActionListener{
 	                    FileReader fr = new FileReader(fi); 
 	  
 	                    // Buffered reader 
-	                    BufferedReader br = new BufferedReader(fr); 
+	                    @SuppressWarnings("resource")
+						BufferedReader br = new BufferedReader(fr); 
 	  
 	                    // Initilize sl 
 	                    sl = br.readLine(); 
