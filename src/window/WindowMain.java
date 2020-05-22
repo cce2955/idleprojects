@@ -201,6 +201,7 @@ public class WindowMain extends JFrame implements ActionListener{
 		 if(!type.equals(ProjectType.DEBUG)){
 			 debugButton.setVisible(false);
 		 }
+		 
 		 switch(type) {
 		 
 		 case MAIN:
@@ -241,9 +242,9 @@ public class WindowMain extends JFrame implements ActionListener{
 			 }
 
 			 if(vowelChecker.isValidInput()) {
-				 t.setText(vowelChecker.returnVowels(input));
-				 
+				 t.setText(vowelChecker.returnVowels(input)); 
 			 }
+			 break;
 		 case TEXT:
 			TextEditorMain textEdit = new TextEditorMain(); 
 			 break;
