@@ -3,12 +3,10 @@ package window;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
+
+import factorialRecursion.FactorialMain;
 import fibSequence.FibSequenceGui;
 import textEditor.TextEditorMain;
 import userInput.UserInput;
@@ -29,7 +29,8 @@ import vowelChecker.VowelCheckerGui;
 
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
-		MAIN, DEBUG, FIB, VOWEL,TEXT;
+		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
+		CLOSE;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -47,6 +48,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	FibSequenceGui fibGui = new FibSequenceGui();
 	UserInput buttonInput = new UserInput();
 	VowelCheckerGui vowelChecker = new VowelCheckerGui();
+	FactorialMain factorial = new FactorialMain();
 	//---------------------------------------------------------------------
 	@SuppressWarnings("deprecation")
 	
@@ -104,12 +106,15 @@ public class WindowMain extends JFrame implements ActionListener{
  		//---------------------------------------------------------------------
         // Create a menu for menu 
         JMenu m1 = new JMenu("Projects"); 
+        JMenu m2 = new JMenu("Cont.");
 		//---------------------------------------------------------------------
         // Create menu items 
         JMenuItem mi1 = new JMenuItem("Main"); 
         JMenuItem mi2 = new JMenuItem("Fibonacci Generator"); 
         JMenuItem mi3 = new JMenuItem("Vowel Counter"); 
         JMenuItem mi9 = new JMenuItem("Text Editor");
+        //Menu 2 items
+        JMenuItem mi4 = new JMenuItem("Factorial Generator");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -119,6 +124,7 @@ public class WindowMain extends JFrame implements ActionListener{
         mi1.addActionListener(this); 
         mi2.addActionListener(this); 
         mi3.addActionListener(this); 
+        mi4.addActionListener(this);
         mi9.addActionListener(this); 
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
@@ -127,16 +133,18 @@ public class WindowMain extends JFrame implements ActionListener{
         m1.add(mi2); 
         m1.add(mi3); 
         m1.add(mi9);
+        m2.add(mi4);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
         //---------------------------------------------------------------------
 		//---------------------------------------------------------------------
-        JMenuItem mc = new JMenuItem("close"); 
+        JMenuItem mc = new JMenuItem("Close"); 
 		//---------------------------------------------------------------------
         mc.addActionListener(this); 
 		//---------------------------------------------------------------------
         mb.add(m1); 
+        mb.add(m2);
         mb.add(mc); 
         mb.setSize(50, 10);
 		//---------------------------------------------------------------------
@@ -189,6 +197,14 @@ public class WindowMain extends JFrame implements ActionListener{
 			  projectType = ProjectType.DEBUG;
 			  action(projectType, null);
 			  break;
+		  case "Close":
+			  projectType = ProjectType.CLOSE;
+			  action(projectType, null);
+			  break;
+		  case "Factorial Generator":
+			  projectType = ProjectType.FACTORIAL;
+			  action(projectType, null);
+			  break;
 		  default:
 			  t.setText("Welcome to the Main Menu");
 			  break;
@@ -206,24 +222,25 @@ public class WindowMain extends JFrame implements ActionListener{
 		 
 		 case MAIN:
 			 System.out.println("Hit main");
-			 break;
+			 break;			 
 		
-			 
 		 case FIB:
 			 fibGui.setFirstVar(true);
 			 if(fibGui.isFirstVar()) {
-			 t.setText("I'm going to generate a Fibonacci Sequence, \n"
-			 		+ " please input the number you wish to iterate over");
-			 fibGui.inputOne(input);
+				 t.setText("I'm going to generate a Fibonacci Sequence, \n"
+				 		+ " please input the number you wish to iterate over");
+				 fibGui.inputOne(input);
 			 }
 			 if(!fibGui.isFirstVar()) {
 				 t.setText("How many iterations do you require?");
 				 if(fibGui.getInputNum() != 0 && fibGui.getIterationNum() !=0) {
-					 fibGui.fibGenerator(fibGui.getInputNum(), fibGui.getIterationNum());
-					 t.setText("With a starting number of: " + fibGui.getInputNum() +
-							 " over an iteration of " + fibGui.getIterationNum() +
-							 " gives us: \n" + fibGui.getInputNum() + " " +
-							 fibGui.arrayToString());
+					 fibGui.fibGenerator(fibGui.getInputNum(), 
+							 fibGui.getIterationNum());
+					 t.setText("With a starting number of: " + 
+					 fibGui.getInputNum() + " over an iteration of " 
+							 + fibGui.getIterationNum() + " gives us: \n" 
+							 + fibGui.getInputNum() + " " 
+							 +	 fibGui.arrayToString());
 					 
 					fibGui.fibArray.clear();
 					fibGui.setFirstVar(true);
@@ -235,23 +252,34 @@ public class WindowMain extends JFrame implements ActionListener{
 			 break;
 		
 		 case VOWEL:
-			 if(!vowelChecker.isValidInput()) {
-				 t.setText("Input a string and I can count how many vowels are "
-							+ "there.");
-				 vowelChecker.setValidInput(true);
-			 }
-
-			 if(vowelChecker.isValidInput()) {
-				 t.setText(vowelChecker.returnVowels(input)); 
-			 }
+				 t.setText("Input a string and I can count how many vowels "
+						 		+ "are there.");
+				 if(button.isEnabled()) {
+					 t.setText(vowelChecker.returnVowels(input)); 
+				 }
 			 break;
+			 
 		 case TEXT:
-			TextEditorMain textEdit = new TextEditorMain(); 
+			@SuppressWarnings("unused") TextEditorMain textEdit = 
+			new TextEditorMain(); 
 			 break;
-		 case DEBUG:
+			 
+		 case DEBUG:	
 			 debugButton.setVisible(true);
 			 break;
-			
+			 
+		 case FACTORIAL:
+			 if(!buttonInput.checkIfValidNumber(input)) {
+				 t.setText("Input a number to find the factorial of.");
+			 }
+			 if(buttonInput.checkIfValidNumber(input)) {
+				 t.setText("The factorial of " + input + " is: "+
+			 factorial.factorialGeneration(input));
+			 }
+			 break;
+			 
+		 case CLOSE:
+			 System.exit(0);
 		 default:
 			 System.out.println("You have reached an unreachable area somehow");
 		 }

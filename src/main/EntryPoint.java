@@ -10,8 +10,8 @@ public class EntryPoint {
 	
 	
 	public static void main(String[] args) {
-		WindowMain windowMain = new WindowMain();
-		
+		@SuppressWarnings("unused")
+		WindowMain mainWindow = new WindowMain();
 	}
 
 }
