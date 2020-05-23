@@ -34,7 +34,6 @@ public class FibSequenceGui {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < fibArray.size(); i++) {
 			sb.append(fibArray.get(i) + " ");
-			System.out.println(sb.toString());
 			if (i % 5 == 0 && i > 1) {
 				sb.append(" \n");
 			}

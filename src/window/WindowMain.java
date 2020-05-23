@@ -213,75 +213,77 @@ public class WindowMain extends JFrame implements ActionListener{
 	    }
 	 
 	 public void action(ProjectType type, String input) {
-		 
 		 if(!type.equals(ProjectType.DEBUG)){
 			 debugButton.setVisible(false);
 		 }
 		 
 		 switch(type) {
-		 
-		 case MAIN:
-			 System.out.println("Hit main");
-			 break;			 
-		
-		 case FIB:
-			 fibGui.setFirstVar(true);
-			 if(fibGui.isFirstVar()) {
-				 t.setText("I'm going to generate a Fibonacci Sequence, \n"
-				 		+ " please input the number you wish to iterate over");
-				 fibGui.inputOne(input);
-			 }
-			 if(!fibGui.isFirstVar()) {
-				 t.setText("How many iterations do you require?");
-				 if(fibGui.getInputNum() != 0 && fibGui.getIterationNum() !=0) {
-					 fibGui.fibGenerator(fibGui.getInputNum(), 
-							 fibGui.getIterationNum());
-					 t.setText("With a starting number of: " + 
-					 fibGui.getInputNum() + " over an iteration of " 
-							 + fibGui.getIterationNum() + " gives us: \n" 
-							 + fibGui.getInputNum() + " " 
-							 +	 fibGui.arrayToString());
+			 case MAIN:
+				 System.out.println("Hit main");
+				 break;			 
+			
+			 case FIB:
+				 fibGui.setFirstVar(true);
+				 if(fibGui.isFirstVar()) {
+					 t.setText("I'm going to generate a Fibonacci Sequence, \n"
+					 		+ " please input the number you wish to iterate over");
+					 fibGui.inputOne(input);
+				 }
+				 if(!fibGui.isFirstVar()) {
+					 t.setText("How many iterations do you require?");
+					 if(fibGui.getInputNum() != 0 && fibGui.getIterationNum() !=0) {
+						 fibGui.fibGenerator(fibGui.getInputNum(), 
+								 fibGui.getIterationNum());
+						 t.setText("With a starting number of: " + 
+						 fibGui.getInputNum() + " over an iteration of " 
+								 + fibGui.getIterationNum() + " gives us: \n" 
+								 + fibGui.getInputNum() + " " 
+								 +	 fibGui.arrayToString());
+						 
+						fibGui.fibArray.clear();
+						fibGui.setFirstVar(true);
+					 }else {
+						 fibGui.inputTwo(input);
+					 }
+				 }
+				 
+				 break;
+			
+			 case VOWEL:
 					 
-					fibGui.fibArray.clear();
-					fibGui.setFirstVar(true);
-				 }else {
-					 fibGui.inputTwo(input);
+					 try {
+//					 if(button.isEnabled()) {
+						 t.setText(vowelChecker.returnVowels(input)); 
+	//				 }
+					 }catch(NullPointerException e) {
+						 t.setText("Input a string and I can count how many vowels "
+							 		+ "are there.");
+					 }
+				 break;
+				
+			 case TEXT:
+				@SuppressWarnings("unused") TextEditorMain textEdit = 
+				new TextEditorMain(); 
+				 break;
+				 
+			 case DEBUG:	
+				 debugButton.setVisible(true);
+				 break;
+				 
+			 case FACTORIAL:
+				 if(!buttonInput.checkIfValidNumber(input)) {
+					 t.setText("Input a number to find the factorial of.");
 				 }
-			 }
-			 
-			 break;
-		
-		 case VOWEL:
-				 t.setText("Input a string and I can count how many vowels "
-						 		+ "are there.");
-				 if(button.isEnabled()) {
-					 t.setText(vowelChecker.returnVowels(input)); 
+				 if(buttonInput.checkIfValidNumber(input)) {
+					 t.setText("The factorial of " + input + " is: "+
+				 factorial.factorialGeneration(input));
 				 }
-			 break;
-			 
-		 case TEXT:
-			@SuppressWarnings("unused") TextEditorMain textEdit = 
-			new TextEditorMain(); 
-			 break;
-			 
-		 case DEBUG:	
-			 debugButton.setVisible(true);
-			 break;
-			 
-		 case FACTORIAL:
-			 if(!buttonInput.checkIfValidNumber(input)) {
-				 t.setText("Input a number to find the factorial of.");
-			 }
-			 if(buttonInput.checkIfValidNumber(input)) {
-				 t.setText("The factorial of " + input + " is: "+
-			 factorial.factorialGeneration(input));
-			 }
-			 break;
-			 
-		 case CLOSE:
-			 System.exit(0);
-		 default:
-			 System.out.println("You have reached an unreachable area somehow");
+				 break;
+				 
+			 case CLOSE:
+				 System.exit(0);
+			 default:
+				 System.out.println("You have reached an unreachable area somehow");
 		 }
 		
 	 }
