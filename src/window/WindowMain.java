@@ -19,8 +19,12 @@ import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
+
+
 import factorialRecursion.FactorialMain;
 import fibSequence.FibSequenceGui;
+import headTails.HeadTails;
+import numberName.NumberName;
 import textEditor.TextEditorMain;
 import userInput.UserInput;
 import vowelChecker.VowelCheckerGui;
@@ -30,7 +34,7 @@ import vowelChecker.VowelCheckerGui;
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
 		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
-		CLOSE;
+		NUMNAME, HEADTAILS, CLOSE;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -40,7 +44,8 @@ public class WindowMain extends JFrame implements ActionListener{
 	JFrame f;
 	Container c;
 	JLabel label;
-	JButton button, debugButton;
+	JButton button, debugButton,
+	headButton, tailButton, resetButton;
 	JPanel panel, buttonPanel;
 	JPanel mainPanel;
 	JMenuBar mb;
@@ -49,13 +54,15 @@ public class WindowMain extends JFrame implements ActionListener{
 	UserInput buttonInput = new UserInput();
 	VowelCheckerGui vowelChecker = new VowelCheckerGui();
 	FactorialMain factorial = new FactorialMain();
+	NumberName numName = new NumberName();
+	HeadTails headOrTails = new HeadTails();
 	//---------------------------------------------------------------------
 	@SuppressWarnings("deprecation")
 	
 	public WindowMain(){
 		//Container
 		c = getContentPane();
-		c.setLayout(new BorderLayout());
+		c.setLayout(new FlowLayout());
 		c.setBackground(Color.WHITE);
 		//---------------------------------------------------------------------
 		//Frame
@@ -69,7 +76,11 @@ public class WindowMain extends JFrame implements ActionListener{
         //Button
         button = new JButton("OK");
         debugButton = new JButton("Test Button");
+        headButton = new JButton("Heads");
+        tailButton = new JButton("Tails");
+        resetButton = new JButton("Reset");
         debugButton.setVisible(false);
+        
 		//---------------------------------------------------------------------
         //Label
         label = new JLabel();
@@ -77,7 +88,6 @@ public class WindowMain extends JFrame implements ActionListener{
 		try { 
             // Set metal look and feel 
             UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); 
-  
             // Set theme to ocean 
             MetalLookAndFeel.setCurrentTheme(new OceanTheme()); 
         } 
@@ -99,7 +109,13 @@ public class WindowMain extends JFrame implements ActionListener{
          JPanel panelGroup = new JPanel();
          panelGroup.add(button);
          panelGroup.add(debugButton);
+         panelGroup.add(headButton);
+         panelGroup.add(tailButton);
+         panelGroup.add(resetButton);  
          debugButton.setVisible(false);
+         headButton.setVisible(false);
+         tailButton.setVisible(false);
+         resetButton.setVisible(false);
  		//---------------------------------------------------------------------
          // Create a menubar 
          mb = new JMenuBar(); 
@@ -115,6 +131,8 @@ public class WindowMain extends JFrame implements ActionListener{
         JMenuItem mi9 = new JMenuItem("Text Editor");
         //Menu 2 items
         JMenuItem mi4 = new JMenuItem("Factorial Generator");
+        JMenuItem mi5 = new JMenuItem("Number Name");
+        JMenuItem mi6 = new JMenuItem("Heads or Tails?");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -125,6 +143,8 @@ public class WindowMain extends JFrame implements ActionListener{
         mi2.addActionListener(this); 
         mi3.addActionListener(this); 
         mi4.addActionListener(this);
+        mi5.addActionListener(this);
+        mi6.addActionListener(this);
         mi9.addActionListener(this); 
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
@@ -134,6 +154,8 @@ public class WindowMain extends JFrame implements ActionListener{
         m1.add(mi3); 
         m1.add(mi9);
         m2.add(mi4);
+        m2.add(mi5);
+        m2.add(mi6);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
@@ -152,6 +174,7 @@ public class WindowMain extends JFrame implements ActionListener{
         f.setSize(500, 500);
 		//---------------------------------------------------------------------
 		//---------------------------------------------------------------------
+        //Action listener for OK button
         button.addActionListener(new ActionListener() {
     	//---------------------------------------------------------------------
 		@Override
@@ -193,6 +216,14 @@ public class WindowMain extends JFrame implements ActionListener{
 			  projectType = ProjectType.TEXT;
 			  action(projectType, null);
 			  break;
+		  case "Number Name":
+			  projectType = ProjectType.NUMNAME;
+			  action(projectType, null);
+			  break;
+		  case "Heads or Tails?":
+			  projectType = ProjectType.HEADTAILS;
+			  action(projectType, null);
+			  break;
 		  case "Debug":
 			  projectType = ProjectType.DEBUG;
 			  action(projectType, null);
@@ -215,6 +246,11 @@ public class WindowMain extends JFrame implements ActionListener{
 	 public void action(ProjectType type, String input) {
 		 if(!type.equals(ProjectType.DEBUG)){
 			 debugButton.setVisible(false);
+		 }
+		 if(!type.equals(ProjectType.HEADTAILS)) {
+			 headButton.setVisible(false);
+			 tailButton.setVisible(false);
+			 resetButton.setVisible(false);
 		 }
 		 
 		 switch(type) {
@@ -250,11 +286,8 @@ public class WindowMain extends JFrame implements ActionListener{
 				 break;
 			
 			 case VOWEL:
-					 
 					 try {
-//					 if(button.isEnabled()) {
 						 t.setText(vowelChecker.returnVowels(input)); 
-	//				 }
 					 }catch(NullPointerException e) {
 						 t.setText("Input a string and I can count how many vowels "
 							 		+ "are there.");
@@ -264,10 +297,6 @@ public class WindowMain extends JFrame implements ActionListener{
 			 case TEXT:
 				@SuppressWarnings("unused") TextEditorMain textEdit = 
 				new TextEditorMain(); 
-				 break;
-				 
-			 case DEBUG:	
-				 debugButton.setVisible(true);
 				 break;
 				 
 			 case FACTORIAL:
@@ -280,8 +309,62 @@ public class WindowMain extends JFrame implements ActionListener{
 				 }
 				 break;
 				 
+			 case NUMNAME:
+				try {
+					if (Integer.valueOf(input) < 999999999) {
+						t.setText(String.join(" ", numName.findNum(input)));
+					}
+					else {
+						t.setText("For now, let's try a number less than 1"
+								+ " Billion");
+					}
+					
+				}catch(NumberFormatException e) {
+					t.setText("Please input a number and it'll "
+							+ "be converted to English Letters (please no"
+							+ "commas at the moment)");
+				}
+				break;
+				
+			 case HEADTAILS:
+				 
+				 headButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						t.setText(headOrTails.flipCoin(true, false));
+					}
+				});
+				 tailButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						t.setText(headOrTails.flipCoin(false, false));
+						
+					}
+				});
+				 resetButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						headOrTails.flipCoin(false, true);
+						
+						t.setText("Stats Reset");
+					}
+				});
+				 headButton.setVisible(true);
+				 tailButton.setVisible(true);
+				 resetButton.setVisible(true);
+				 break;
+				 
+			 case DEBUG:	
+				 debugButton.setVisible(true);
+				 break;
+				 
 			 case CLOSE:
 				 System.exit(0);
+				 
 			 default:
 				 System.out.println("You have reached an unreachable area somehow");
 		 }
