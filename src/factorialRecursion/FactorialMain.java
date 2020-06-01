@@ -14,6 +14,8 @@ public class FactorialMain {
 		int number = Integer.valueOf(input);
 		int sum = number;
 		while (number > 0) {
+			//Factorial equation
+			//Doesn't display if number is too large oh well
 			if(number > 1) {
 				sum = sum * (number - 1);
 			}

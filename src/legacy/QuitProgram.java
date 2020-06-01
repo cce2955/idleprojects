@@ -1,4 +1,4 @@
-package main;
+package legacy;
 
 public class QuitProgram {
 	boolean quitProgram;

@@ -1,4 +1,4 @@
-package userInput;
+package legacy;
 
 import java.util.Scanner;
 

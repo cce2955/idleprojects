@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class VowelCounter {
 	
-	HashMap<Integer, Integer> vowelCounter = new HashMap<>();
+	protected HashMap<Integer, Integer> vowelCounter = new HashMap<>();
 	
 	
 	public HashMap<Integer,Integer> findVowels(String inputString){

@@ -3,15 +3,7 @@ package numberName;
 import java.util.ArrayList;
 
 public class NumberName {
-/*
-	 * Number Names - Show how to spell out a number in English. 
-	 * You can use a preexisting implementation or roll your own, 
-	 * but you should support inputs up to at least one million 
-	 * (or the maximum value of your language's default bounded integer type, 
-	 * if that's less). Optional: Support for inputs other than positive integers
-	 *  (like zero, negative integers, and floating-point numbers).
-	 */
-	
+
 	//Array Declaration
 	private String[] arrSingle = {"Dummy", "One","Two","Three","Four","Five"
 			,"Six", "Seven", "Eight", "Nine"};
@@ -33,7 +25,10 @@ public class NumberName {
 		StringBuilder sb = new StringBuilder();
 		//Toss String into String builder
 		sb.append(input);
-
+		
+		//This separates numbers into triplets
+		//So 1000000 would be 100,000,000
+		//and 10000 would be 10,000 etc.
 		if(sb.length() >= 3) {
 			//Set X at the end of the arrMulti index
 			x = sb.length() / 3;

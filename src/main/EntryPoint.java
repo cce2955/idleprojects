@@ -3,9 +3,7 @@ package main;
 
 
 
-import java.util.ArrayList;
-
-import numberName.NumberName;
+import cardDeck.CardDeck;
 import window.WindowMain;
 
 /*	So I'm getting a little burnt out on redux and I'm gonna have to grind at 
@@ -25,7 +23,13 @@ public class EntryPoint {
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
 		WindowMain mainWindow = new WindowMain();
+		CardDeck deck = new CardDeck();
+		deck.makeFullDeck();
+		deck.getDeck().forEach(card ->{
+			System.out.println(card.getNum() + " " + card.getFace() + " " + card.getSuit());
+		});
 		
+		deck.pullFromDeck("1", "Heart");
 	}
 
 }

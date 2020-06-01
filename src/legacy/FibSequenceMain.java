@@ -1,7 +1,8 @@
-package fibSequence;
+package legacy;
 
 import java.util.ArrayList;
-import userInput.UserInput;
+
+import fibSequence.FibCalc;
 
 /*Enter a number and have the program generate the 
  * Fibonacci sequence to that number or to the Nth number.

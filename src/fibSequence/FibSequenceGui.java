@@ -2,7 +2,7 @@ package fibSequence;
 
 import java.util.ArrayList;
 
-import userInput.UserInput;
+import legacy.UserInput;
 
 //This will be a rewrite of the FSMain class but GUI(and class) friendly
 public class FibSequenceGui {
@@ -11,6 +11,9 @@ public class FibSequenceGui {
 	private int inputNum;
 	private int iterationNum;
 	public ArrayList<Integer> fibArray = new ArrayList<>();
+	//This is an older code I placed in here
+	//It's kind of hacky, since you have to check for the initial 
+	//number and iterations it has to check what state its in
 	
 	public void inputOne(String input) {
 		if(validCheck.checkIfValidNumber(input)) {

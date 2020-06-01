@@ -1,7 +1,6 @@
 package headTails;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class HeadTails {
 
@@ -14,9 +13,10 @@ public class HeadTails {
 	
 	public String flipCoin (boolean coin, boolean reset) {
 		HashMap<String, Integer> coinHashMap = new HashMap<>();
-		coinHashMap.putAll(hashMapCoin(coin, reset));
-		System.out.println(coinHashMap);
 		String coinWon = "";
+		//Coin toss is being calculated in a private method
+		coinHashMap.putAll(hashMapCoin(coin, reset));
+		
 		if (coinHashMap.get("Coin won") == 1){
 			coinWon = "Heads";
 		}
@@ -30,6 +30,7 @@ public class HeadTails {
 		coinHashMap.get("Loss") + " games \n" +
 		"There has been " + coinHashMap.get("Heads Thrown") + " heads thrown "
 		+" and " + coinHashMap.get("Tails thrown") + " tail thrown so far.";
+		
 		return result;
 		
 		
@@ -38,8 +39,9 @@ public class HeadTails {
 	private HashMap<String, Integer> hashMapCoin(boolean coin, boolean reset) {
 		HashMap<String, Integer> winLoss = new HashMap<>();
 		double rand = Math.random() * 100;
-
+		//Increment throw counter
 		setCoinThrown();
+		//Figure out who won and update the object
 		if (rand >= 50 && rand <= 100) {
 			setHeadCounter();
 			if(coin == true) {
@@ -48,7 +50,7 @@ public class HeadTails {
 			}
 			if(coin == false) {
 				setLoseCounter();
-				setDisplayWinner(1);//2 for Tails
+				setDisplayWinner(1);
 			}
 		}else if(rand <= 50 && rand >= 0) {
 			setTailCounter();
@@ -58,14 +60,14 @@ public class HeadTails {
 			}
 			if(coin== true) {
 				setLoseCounter();
-				setDisplayWinner(2);//1 for Heads
+				setDisplayWinner(2);
 			}
 		}
 		if(reset) {
 			resetValues();
 		}
 			
-			
+			//Update hashmap
 		winLoss.put("Heads Thrown",	getHeadCounter());
 		winLoss.put("Tails thrown", getTailCounter());
 		winLoss.put("Wins", getWinCounter());

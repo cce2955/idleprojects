@@ -24,9 +24,10 @@ import javax.swing.plaf.metal.OceanTheme;
 import factorialRecursion.FactorialMain;
 import fibSequence.FibSequenceGui;
 import headTails.HeadTails;
+import legacy.UserInput;
 import numberName.NumberName;
+import reverseString.ReverseString;
 import textEditor.TextEditorMain;
-import userInput.UserInput;
 import vowelChecker.VowelCheckerGui;
 
 
@@ -34,7 +35,7 @@ import vowelChecker.VowelCheckerGui;
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
 		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
-		NUMNAME, HEADTAILS, CLOSE;
+		NUMNAME, HEADTAILS, REVERSE, CLOSE;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -56,6 +57,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	FactorialMain factorial = new FactorialMain();
 	NumberName numName = new NumberName();
 	HeadTails headOrTails = new HeadTails();
+	ReverseString reverse = new ReverseString();
 	//---------------------------------------------------------------------
 	@SuppressWarnings("deprecation")
 	
@@ -133,6 +135,7 @@ public class WindowMain extends JFrame implements ActionListener{
         JMenuItem mi4 = new JMenuItem("Factorial Generator");
         JMenuItem mi5 = new JMenuItem("Number Name");
         JMenuItem mi6 = new JMenuItem("Heads or Tails?");
+        JMenuItem mi7 = new JMenuItem("Reverse A String");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -145,6 +148,7 @@ public class WindowMain extends JFrame implements ActionListener{
         mi4.addActionListener(this);
         mi5.addActionListener(this);
         mi6.addActionListener(this);
+        mi7.addActionListener(this);
         mi9.addActionListener(this); 
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
@@ -156,6 +160,7 @@ public class WindowMain extends JFrame implements ActionListener{
         m2.add(mi4);
         m2.add(mi5);
         m2.add(mi6);
+        m2.add(mi7);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
@@ -236,6 +241,9 @@ public class WindowMain extends JFrame implements ActionListener{
 			  projectType = ProjectType.FACTORIAL;
 			  action(projectType, null);
 			  break;
+		  case "Reverse A String":
+			  projectType = ProjectType.REVERSE;
+			  action(projectType, null);
 		  default:
 			  t.setText("Welcome to the Main Menu");
 			  break;
@@ -244,14 +252,11 @@ public class WindowMain extends JFrame implements ActionListener{
 	    }
 	 
 	 public void action(ProjectType type, String input) {
-		 if(!type.equals(ProjectType.DEBUG)){
-			 debugButton.setVisible(false);
-		 }
-		 if(!type.equals(ProjectType.HEADTAILS)) {
-			 headButton.setVisible(false);
-			 tailButton.setVisible(false);
-			 resetButton.setVisible(false);
-		 }
+		 debugButton.setVisible(false);
+		 headButton.setVisible(false);
+		 tailButton.setVisible(false);
+		 resetButton.setVisible(false);
+		 
 		 
 		 switch(type) {
 			 case MAIN:
@@ -357,7 +362,14 @@ public class WindowMain extends JFrame implements ActionListener{
 				 tailButton.setVisible(true);
 				 resetButton.setVisible(true);
 				 break;
-				 
+			 case REVERSE:
+				 try {
+					 t.setText(reverse.setReverseStringInput(input));
+				 } catch (NullPointerException e) {
+					 t.setText("Input a sentence and I'll reverse it");
+				 }
+				 	 
+				 break;
 			 case DEBUG:	
 				 debugButton.setVisible(true);
 				 break;

@@ -9,6 +9,7 @@ public class FibCalc {
 		int sum = userInput;
 		int userInputMinusOne = userInput;
 		for (int i = 0; i < iterations; i++) {
+			//Sum = N + (N -1)
 			userInputMinusOne = userInput;
 			userInput = sum;
 			sum = userInputMinusOne + userInput;

@@ -1,10 +1,6 @@
-package main;
+package legacy;
 
 import java.util.ArrayList;
-
-import fibSequence.FibSequenceMain;
-import userInput.UserInput;
-import vowelChecker.VowelCheckerMain;
 
 public class ProjectMasterList {
 	UserInput input = new UserInput();
