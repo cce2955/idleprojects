@@ -44,7 +44,10 @@ public class NumberName {
 			}
 			switch(i % 3) {
 				case 0:		
-					arr.add(getNumOne(String.valueOf(sb.charAt(i))));
+					if(sb.length() >2) {
+						arr.add(getNumOne(String.valueOf(sb.charAt(i))));
+					}
+					
 					if (x > 0) {
 						//Get the number and append a hundreds place to it
 						//ex. One Hundred, two Thousand, three million, etc.
@@ -55,11 +58,18 @@ public class NumberName {
 				case 1:
 					//If the string doesn't contain one, then add 
 					//Twenty, thirty, fourty, etc. to it
-					if (!String.valueOf(sb.charAt(i)).contains("1")) {
+					if (!String.valueOf(sb.charAt(i)).contains("1")
+							&& sb.length() > 2) {
 						arr.add(getNumTen(String.valueOf(sb.charAt(i))));
-					} else {
-						//Else add eleven, twelve, thirteen, etc.
+					} else if (sb.length() > 2) {
+						//If the number has at least 3 digits check the ones 
+						//place and give it eleven, twelve, etc.
 						arr.add(getNumTeens(String.valueOf(sb.charAt(i + 1))));
+						setTeen(true);
+					}else {
+						//or else just check the number in the ones place, 
+						//which will still give you eleven, twelve, etc.
+						arr.add(getNumTeens(String.valueOf(sb.charAt(i))));
 						setTeen(true);
 					}
 					
