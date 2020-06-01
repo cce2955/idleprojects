@@ -59,7 +59,7 @@ public class NumberName {
 						arr.add(getNumTen(String.valueOf(sb.charAt(i))));
 					} else {
 						//Else add eleven, twelve, thirteen, etc.
-						arr.add(getNumTeens(String.valueOf(sb.charAt(i))));
+						arr.add(getNumTeens(String.valueOf(sb.charAt(i + 1))));
 						setTeen(true);
 					}
 					
