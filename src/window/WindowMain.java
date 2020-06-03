@@ -265,7 +265,7 @@ public class WindowMain extends JFrame implements ActionListener{
 		 headButton.setVisible(false);
 		 tailButton.setVisible(false);
 		 resetButton.setVisible(false);
-		 
+		button.setVisible(true); 
 		 
 		 switch(type) {
 			 case MAIN:
@@ -341,7 +341,7 @@ public class WindowMain extends JFrame implements ActionListener{
 				break;
 				
 			 case HEADTAILS:
-				 
+				 button.setVisible(false);
 				 headButton.addActionListener(new ActionListener() {
 					
 					@Override
