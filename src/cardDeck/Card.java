@@ -28,6 +28,7 @@ public class Card {
 		this.suit = suit;
 		this.face = face;
 	}
+	
 	public Card(int id, int num, Suit suit, Face face, Color color) {
 		super();
 		this.id = id;

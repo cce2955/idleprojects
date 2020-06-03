@@ -19,8 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
-
-
+import cardDeck.CardWindow;
 import factorialRecursion.FactorialMain;
 import fibSequence.FibSequenceGui;
 import headTails.HeadTails;
@@ -35,7 +34,7 @@ import vowelChecker.VowelCheckerGui;
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
 		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
-		NUMNAME, HEADTAILS, REVERSE, CLOSE;
+		NUMNAME, HEADTAILS, REVERSE, CLOSE, CARDS;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -125,6 +124,7 @@ public class WindowMain extends JFrame implements ActionListener{
         // Create a menu for menu 
         JMenu m1 = new JMenu("Projects"); 
         JMenu m2 = new JMenu("Cont.");
+        JMenu m3 = new JMenu("etc.");
 		//---------------------------------------------------------------------
         // Create menu items 
         JMenuItem mi1 = new JMenuItem("Main"); 
@@ -136,6 +136,8 @@ public class WindowMain extends JFrame implements ActionListener{
         JMenuItem mi5 = new JMenuItem("Number Name");
         JMenuItem mi6 = new JMenuItem("Heads or Tails?");
         JMenuItem mi7 = new JMenuItem("Reverse A String");
+        //Menu 3 items
+        JMenuItem miCard = new JMenuItem("Card Counter");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -149,7 +151,8 @@ public class WindowMain extends JFrame implements ActionListener{
         mi5.addActionListener(this);
         mi6.addActionListener(this);
         mi7.addActionListener(this);
-        mi9.addActionListener(this); 
+        mi9.addActionListener(this);
+        miCard.addActionListener(this);
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
         //---------------------------------------------------------------------
@@ -161,6 +164,7 @@ public class WindowMain extends JFrame implements ActionListener{
         m2.add(mi5);
         m2.add(mi6);
         m2.add(mi7);
+        m3.add(miCard);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
@@ -172,6 +176,7 @@ public class WindowMain extends JFrame implements ActionListener{
 		//---------------------------------------------------------------------
         mb.add(m1); 
         mb.add(m2);
+        mb.add(m3);
         mb.add(mc); 
         mb.setSize(50, 10);
 		//---------------------------------------------------------------------
@@ -244,6 +249,10 @@ public class WindowMain extends JFrame implements ActionListener{
 		  case "Reverse A String":
 			  projectType = ProjectType.REVERSE;
 			  action(projectType, null);
+		  case "Card Counter":
+			  projectType = ProjectType.CARDS;
+			  action(projectType, null);
+			  break;
 		  default:
 			  t.setText("Welcome to the Main Menu");
 			  break;
@@ -369,6 +378,9 @@ public class WindowMain extends JFrame implements ActionListener{
 					 t.setText("Input a sentence and I'll reverse it");
 				 }
 				 	 
+				 break;
+			 case CARDS:
+				 CardWindow cards = new CardWindow();
 				 break;
 			 case DEBUG:	
 				 debugButton.setVisible(true);

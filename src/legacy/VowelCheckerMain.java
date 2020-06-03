@@ -9,7 +9,6 @@ public class VowelCheckerMain {
 	
 	public void checkVowels() {
 		int sum = 0;
-		String[] arr = {"A", "E", "I", "O", "U"};
 		System.out.println("Input a string and I can count how many vowels are "
 				+ "there.");
 		input.setString(input.userInput.nextLine());

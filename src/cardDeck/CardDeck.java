@@ -1,6 +1,5 @@
 package cardDeck;
 
-import java.awt.Window.Type;
 import java.util.ArrayList;
 import cardDeck.Card.Face;
 import cardDeck.Card.Suit;
@@ -10,15 +9,23 @@ public class CardDeck {
 	private ArrayList<Card> deck;
 	private ArrayList<Card> usedDeck;
 	private int exist = 0;
-	
+	private boolean change;
+	private int cardId;	
+	private int number;
+
 	public ArrayList<Card> makeFullDeck(){
+		
 		ArrayList<Card> cards = new ArrayList<>();
+		ArrayList<Card> usedCard = new ArrayList<>();
+		cards.clear();
+		usedCard.clear();
+		
 		int id = 0;
-		for (int i = 1; i < 13; i++) {
+		for (int i = 1; i < 14; i++) {
 			id++;//Id needs to increment so we're just gonna do 
 			//this. I think I have an alternative way to work this out
 			//but eh, this works for now.
-			cards.add(new Card(id, i, Suit.HEART, Face.EMPTY));
+			cards.add(new Card(id, i, Card.Suit.HEART, Face.EMPTY));
 			id++;
 			cards.add(new Card(id, i, Suit.DIAMOND, Face.EMPTY));
 			id++;
@@ -26,67 +33,105 @@ public class CardDeck {
 			id++;
 			cards.add(new Card(id, i, Suit.CLUB, Face.EMPTY));
 		}
-		
+		//After assigning the cards, give cards 1,11,12,13 faces
 		cards.forEach(card ->{
 			if(card.getNum() == 1){
 				card.setFace(Face.ACE);			}
-			if(card.getNum() == 10) {
+			if(card.getNum() == 11) {
 				card.setFace(Face.JACK);
 			}
-			if(card.getNum() == 11) {
+			if(card.getNum() == 12) {
 				card.setFace(Face.QUEEN);
 			}
-			if(card.getNum() == 12) {
+			if(card.getNum() == 13) {
 				card.setFace(Face.KING);
 			}
 		});
-		cards.add(new Card(id, 0, Suit.EMPTY, Face.JOKER));
-		setDeck(cards);
 		
-		return getDeck();
+		//Also throw in a joker because why not
+		cards.add(new Card(id, 0, Suit.EMPTY, Face.JOKER));
+		
+		setDeck(cards);
+		setUsedDeck(usedCard);
+		return cards;
 	}
 	
 	
-	private boolean doesCardExist (String input, String cardSuit) {
-		int num = Integer.valueOf(input);
+	public boolean doesCardExist (String input, String cardSuit) {
+
+		setNumber(Integer.valueOf(input));
 		this.deck.forEach(card ->{
-			System.out.println(card.getSuit());
-			System.out.println(cardSuit.toUpperCase());
-			System.out.println(input);
-			System.out.println(card.getId());
-			if(card.getId() == num) {
-				if(card.getSuit().equals(cardSuit.toUpperCase())) {
+			if(card.getNum() == getNumber()) {
+				if(card.getSuit().toString().equals(cardSuit.toUpperCase())) {
 						exist = 1;//If card matches deck, flag it for existence
 					}
 				}
 		});
 		if(exist == 1) {
+			pullFromDeck(input, cardSuit);
 			return true;
 		}
 		return false;//If card doesn't exist, it doesn't exist...
 	}
 	
+	
 	@SuppressWarnings("unlikely-arg-type")
-	public ArrayList<Card> pullFromDeck(String input,  String suit){
-		int num = Integer.valueOf(input);
-		if(doesCardExist(input.toUpperCase(), suit.toUpperCase())) {
-			System.out.println("Card exists already");
-			return this.deck;//If card exists, don't do anything
-			//Gonna find some way to return this to user
-		}else {
-			this.deck.forEach(card ->{
-				if(card.getId() == num && card.getSuit().equals(suit)) {
-					System.out.println("No card found");
-					usedDeck.add(card.getId(), card);
-					deck.remove(card.getId());
-					//If card doesn't exist, remove it from array and toss
-					//it in used array
+	private ArrayList<Card> pullFromDeck(String input, String suit){
+		setChange(false);
+		
+			this.deck.forEach(card ->{	
+			int num = Integer.valueOf(input);
+			String upper = suit.toUpperCase().trim();
+			if(card.getNum() == num && card.getSuit().
+				toString().equals(upper)) {
+					//After checking if the card exists in the deck
+					//We're going to cycle through all the cards and find it
+					//Then flag it to be moved to a used deck
+				setChange(true);
+				setCardId(card.getId());	
 				}
 			});
+		
+		if(change) {
+			//If found, do the stated above
+			//Okay so due to the way I arranged the array, all IDs
+			//are off by one, I did this to work with joker 
+			//but that's not working out all too well....
+			for (int i =0; i < deck.size(); i++) {
+				if(deck.get(i).getId() == getCardId()) {
+					//Find the id, add it to the used card deck
+					//Remove it from the deck
+					this.usedDeck.add(deck.get(i));
+					this.deck.remove(i);
+				}
+			}
+
+			setDeck(this.deck);
+			setUsedDeck(this.usedDeck);
+			return this.deck;
+		} else {
+			return this.deck;
 		}
-		return deck;
 	}
 	
+		
+	
+	
+	
+	
+
+	public int getCardId() {
+		return cardId;
+	}
+	public void setCardId(int cardId) {
+		this.cardId = cardId;
+	}
+	public boolean isChange() {
+		return change;
+	}
+	public void setChange(boolean change) {
+		this.change = change;
+	}
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
@@ -100,6 +145,17 @@ public class CardDeck {
 	public void setUsedDeck(ArrayList<Card> usedDeck) {
 		this.usedDeck = usedDeck;
 	}
+
+
+	public int getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
 
 }
 
