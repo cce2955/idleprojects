@@ -8,7 +8,7 @@ public class CardDeck {
 	
 	private ArrayList<Card> deck;
 	private ArrayList<Card> usedDeck;
-	private int exist = 0;
+	private boolean exist;
 	private boolean change;
 	private int cardId;	
 	private int number;
@@ -58,16 +58,34 @@ public class CardDeck {
 	
 	
 	public boolean doesCardExist (String input, String cardSuit) {
-
+		
+		switch(input.toUpperCase()) {
+			case "ACE":
+				input = "1";
+				break;
+			case "JACK":
+				input = "11";
+				break;
+			case "QUEEN":
+				input = "12";
+				break;
+			case "KING":
+				input = "13";
+				break;
+			default:
+				break;
+			//Push face cards to a number		
+		}
 		setNumber(Integer.valueOf(input));
+		setExist(false);
 		this.deck.forEach(card ->{
 			if(card.getNum() == getNumber()) {
 				if(card.getSuit().toString().equals(cardSuit.toUpperCase())) {
-						exist = 1;//If card matches deck, flag it for existence
+						setExist(true);;//If card matches deck, flag it for existence
 					}
 				}
 		});
-		if(exist == 1) {
+		if(exist) {
 			pullFromDeck(input, cardSuit);
 			return true;
 		}
@@ -75,7 +93,6 @@ public class CardDeck {
 	}
 	
 	
-	@SuppressWarnings("unlikely-arg-type")
 	private ArrayList<Card> pullFromDeck(String input, String suit){
 		setChange(false);
 		
@@ -155,7 +172,18 @@ public class CardDeck {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	
+
+
+	public boolean isExist() {
+		return exist;
+	}
+
+
+	public void setExist(boolean exist) {
+		this.exist = exist;
+	}
+
+
 
 }
 

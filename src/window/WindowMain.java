@@ -380,7 +380,7 @@ public class WindowMain extends JFrame implements ActionListener{
 				 	 
 				 break;
 			 case CARDS:
-				 CardWindow cards = new CardWindow();
+				 @SuppressWarnings("unused") CardWindow cards = new CardWindow();
 				 break;
 			 case DEBUG:	
 				 debugButton.setVisible(true);

@@ -18,6 +18,10 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
 public class CardWindow extends JFrame implements ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Jframe declarations
 	JFrame f = new JFrame();
 	JTextArea mainTextArea = new JTextArea(), 
@@ -38,6 +42,7 @@ public class CardWindow extends JFrame implements ActionListener{
 	JComboBox<String> numberCB = new JComboBox<>(numbers);
 	JComboBox<String> suitCB = new JComboBox<>(suit);
 	
+	@SuppressWarnings("deprecation")
 	public CardWindow() {
 		f = new JFrame("Card Counter");
 		try {  
@@ -66,6 +71,9 @@ public class CardWindow extends JFrame implements ActionListener{
 				ArrayList<String> resultsDeck = new ArrayList<>();
 				deck.makeFullDeck();
 				mainTextArea.setText("Deck reset");
+				resultsArea.setText("cards remaining: \n " 
+						+ deck.getDeck().size());
+				
 				deck.getDeck().forEach(card ->{
 					if(card.getNum() != 1 &&
 							card.getNum() <= 11 ) {
@@ -93,7 +101,19 @@ public class CardWindow extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				String suit = String.valueOf(suitCB.getSelectedItem());
 				String num = String.valueOf(numberCB.getSelectedItem());
-				System.out.println(deck.doesCardExist(num, suit));
+				StringBuilder text = new StringBuilder();
+				
+				if(deck.doesCardExist(num, suit)) {
+					mainTextArea.setText("Card " + num + " of " + suit + "s "
+							+ "has been drawn");
+					resultsArea.setText("cards remaining: \n " 
+							+ deck.getDeck().size());
+				}else {
+					mainTextArea.setText("Card has already been drawn");
+					
+					
+				}
+				
 			}
 		});
 		//Container setup

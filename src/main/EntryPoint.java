@@ -3,8 +3,6 @@ package main;
 
 
 
-import cardDeck.CardDeck;
-import cardDeck.CardWindow;
 import window.WindowMain;
 
 /*	So I'm getting a little burnt out on redux and I'm gonna have to grind at 
@@ -12,10 +10,9 @@ import window.WindowMain;
  * tiny little (and I mean little) projects here
 */
 public class EntryPoint {
-	
-	
+
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
+	 	@SuppressWarnings("unused")
 		WindowMain mainWindow = new WindowMain();
 		
 	}
