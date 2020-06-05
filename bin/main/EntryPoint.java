@@ -20,7 +20,7 @@ public class EntryPoint {
 	public static void main(String[] args) throws ClientProtocolException, IOException {
 	 	@SuppressWarnings("unused")
 		WindowMain mainWindow = new WindowMain();
-	 	
+	 	StockTicker st = new StockTicker();
 	}
 
 }
