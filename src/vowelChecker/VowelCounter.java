@@ -11,7 +11,7 @@ public class VowelCounter {
 		int A = 0, E = 0, I= 0, O = 0, U = 0;
 		inputString.toLowerCase();
 		StringBuilder stringDeconstructor = new StringBuilder();
-		stringDeconstructor.append(inputString);
+		stringDeconstructor.append(inputString.toLowerCase());
 		
 		for (int i = 0; i < stringDeconstructor.length(); i++) {
 			switch(stringDeconstructor.charAt(i)) {
@@ -39,7 +39,11 @@ public class VowelCounter {
 				break;
 			}
 		}
-		
+		vowelCounter.putIfAbsent(0, 0);
+		vowelCounter.putIfAbsent(1, 0);
+		vowelCounter.putIfAbsent(2, 0);
+		vowelCounter.putIfAbsent(3, 0);
+		vowelCounter.putIfAbsent(4, 0);
 		return vowelCounter;
 	}
 }

@@ -37,6 +37,12 @@ public class Card {
 		this.face = face;
 		this.color = color;
 	}
+	
+	
+	public Card() {
+		super();
+	}
+
 	public Color getColor() {
 		return color;
 	}
