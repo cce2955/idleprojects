@@ -73,9 +73,15 @@ class BudgetCalculatorTest {
 		
 	}
 	
-	@Test void returnZeroMonths() {
+	@Test 
+	void returnZeroMonths() {
 		String output = budget.choice();
 		assertEquals("You have 0 months available.", output);
+	}
+	@Test void returnOneMonth(){
+		budget.earningsThisMonth(100);
+		String output = budget.choice();
+		assertEquals("You have 1 month available.", output);
 	}
 
 }

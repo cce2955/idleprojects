@@ -13,7 +13,8 @@ public class BudgetCalculator {
 	private double percent;
 	private double monthEarningsPrimary;
 	private double monthEarningsSecondary;
-	
+	private String primaryMonth;
+	private String secondaryMonth;
 	
 	public ArrayList<Double> earningsThisMonth(double deposit) {
 		arr.add(deposit);
@@ -25,6 +26,11 @@ public class BudgetCalculator {
 		arr.clear();
 		setArr(arr);
 		return getArr();
+	}
+	
+	public void resetMonths() {
+		setPrimaryMonth(null);
+		setSecondaryMonth(null);
 	}
 	
 	public String choice() {
@@ -52,7 +58,7 @@ public class BudgetCalculator {
 		
 		return "Earnings for " + month1 + " was " + getMonthEarningsPrimary() + 
 				" and earnings for " + month2 + " was " 
-				+ getMonthEarningsSecondary() + ", which is a " + 
+				+ getMonthEarningsSecondary() + ", \n which is a " + 
 				increaseOrDecrease() + " of " + findPercentage(month1, month2)
 				+ "%";
 		//Calculation for percentage and calculation for determining
@@ -122,9 +128,7 @@ public class BudgetCalculator {
 				//Just realized I could do this in a loop, too late
 		}
 	}
-	private String monthToString(String month) {
-		return "";
-	}
+	
 	public int availableMonths () {
 		if(!getArr().equals(null)) {
 			return getArr().size();
@@ -133,6 +137,7 @@ public class BudgetCalculator {
 		}
 		
 	}
+	
 	
 	public ArrayList<Double> getArr() {
 		return arr;
@@ -172,6 +177,22 @@ public class BudgetCalculator {
 
 	public void setMonthEarningsSecondary(double monthEarningsSecondary) {
 		this.monthEarningsSecondary = monthEarningsSecondary;
+	}
+
+	public String getPrimaryMonth() {
+		return primaryMonth;
+	}
+
+	public void setPrimaryMonth(String primaryMonth) {
+		this.primaryMonth = primaryMonth;
+	}
+
+	public String getSecondaryMonth() {
+		return secondaryMonth;
+	}
+
+	public void setSecondaryMonth(String secondaryMonth) {
+		this.secondaryMonth = secondaryMonth;
 	}
 	
 	

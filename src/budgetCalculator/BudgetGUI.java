@@ -2,6 +2,7 @@ package budgetCalculator;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.SecondaryLoop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,8 +27,12 @@ public class BudgetGUI extends JFrame{
 	Container c = new Container();
 	JPanel combopanel = new JPanel();
 	JPanel textPanel = new JPanel();
+	JPanel monthPanel = new JPanel();
 	JPanel buttonPanel = new JPanel();
-	JButton depositButton = new JButton("Deposit Card");
+	JButton depositButton = new JButton("Deposit Money");
+	JButton okButton = new JButton("Ok");
+	JButton firstMonthButton = new JButton("Select First Month");
+	JButton secondMonthButton = new JButton("Select Second Month");
 	JButton resetButton = new JButton("Reset");
 	JComboBox<String> monthCB = new JComboBox<>();
 	BudgetCalculator calc = new BudgetCalculator();
@@ -38,7 +43,11 @@ public class BudgetGUI extends JFrame{
 	@SuppressWarnings("deprecation")
 	public BudgetGUI(){
 		f = new JFrame("Budget Calculator");
+		okButton.setVisible(false);
+		resetButton.setVisible(false);
 		mainTextArea.setWrapStyleWord(true);
+		firstMonthButton.setVisible(false);
+		secondMonthButton.setVisible(false);
 		mainTextArea.setText("How much have you deposited this month");
 		monthCB.setVisible(false);
 		try {  
@@ -47,6 +56,7 @@ public class BudgetGUI extends JFrame{
         } 
         catch (Exception e) { 
         }
+		
 		
 		depositButton.addActionListener(new ActionListener() {
 			
@@ -58,6 +68,7 @@ public class BudgetGUI extends JFrame{
 					mainTextArea.setText(
 							deposit + " has been added to your account, "
 							+ calc.choice());
+					resultsArea.setText("Select your first month");
 					monthCB.removeAllItems();
 					monthCB.setVisible(true);
 					for (int i = 0; i < calc.getArr().size(); i++) {
@@ -68,6 +79,9 @@ public class BudgetGUI extends JFrame{
 						}
 						x++;
 					}
+					firstMonthButton.setVisible(true);
+					secondMonthButton.setVisible(true);
+					resetButton.setVisible(true);
 				}catch (NumberFormatException ex) {
 					mainTextArea.setText("That's not a valid number, please "
 							+ "try again");
@@ -75,19 +89,95 @@ public class BudgetGUI extends JFrame{
 				
 			}
 		});
-		combopanel.add(monthCB);
+		
+		okButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!calc.getPrimaryMonth().isEmpty()
+						&& !calc.getPrimaryMonth().isEmpty()) {
+				mainTextArea.setText(
+						calc.showEarningsPerTwoMonths(calc.getPrimaryMonth(), 
+								calc.getSecondaryMonth()));
+				}
+				
+			}
+		});
+		
+		firstMonthButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String input = String.valueOf(monthCB.getSelectedItem());
+				try {
+					if(calc.getPrimaryMonth().isEmpty()) {
+						calc.getPrimaryMonth();
+					}
+					
+				}catch (NullPointerException ex) {
+					calc.setPrimaryMonth(input);
+					checkMonths();
+				}
+			}
+		});
+		
+		secondMonthButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String input = String.valueOf(monthCB.getSelectedItem());
+				try {
+					if(calc.getSecondaryMonth().isEmpty()) {
+						calc.setSecondaryMonth(input);
+					}
+				}catch (NullPointerException ex) {
+					calc.setSecondaryMonth(input);
+					checkMonths();
+				}
+				
+			}
+		});
+		
+		resetButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				calc.resetMonths();
+				okButton.setVisible(false);
+				firstMonthButton.setVisible(false);
+				secondMonthButton.setVisible(false);
+				resultsArea.setVisible(false);
+				monthCB.setVisible(false);
+				
+			}
+		});
 		textPanel.add(mainTextArea);
 		buttonPanel.add(depositButton);
+		buttonPanel.add(okButton);
+		buttonPanel.add(resetButton);
+		buttonPanel.add(firstMonthButton);
+		buttonPanel.add(secondMonthButton);
+		monthPanel.add(resultsArea);
+		combopanel.add(monthCB);
 		c = getContentPane();
 		c.setLayout(new FlowLayout());
+		c.add(monthPanel);
 		c.add(combopanel);
 		c.add(textPanel);
-		c.add(depositButton);
+		c.add(buttonPanel);
 		
 		//Frame setup
 		f.add(c);
 		f.setSize(500, 500);
 		f.show();
 
+	}
+	public void checkMonths() {
+		try {
+			if(!calc.getPrimaryMonth().isEmpty()
+					&& !calc.getSecondaryMonth().isEmpty()) {
+				okButton.setVisible(true);
+			}
+		} catch (NullPointerException e) {
+			
+		}
 	}
 }
