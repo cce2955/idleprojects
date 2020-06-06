@@ -6,6 +6,8 @@ This is a little project I'm doing to test out my java skills, it utilizes Java 
 Input values for money earned and spent over a period of time, see a percentage change, may implement something to work on budget goals
 
 ## Current Projects so far
+##### General Testing
+Added unit tests for 90% of the modules just to see how testing works, tests have guided me towards some edge cases.
 ##### Stock Query
 Query a stock and gain information on it in real time. Utilizes GET requests and JSON parsing
 ##### Card Deck
