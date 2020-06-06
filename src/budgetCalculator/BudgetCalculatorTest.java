@@ -28,7 +28,7 @@ class BudgetCalculatorTest {
 		budget.earningsThisMonth(200);
 		String test = budget.showEarningsPerTwoMonths("january", "february");
 		assertEquals("Earnings for january was 100.0 and earnings for"
-				+ " february was 200.0, which is a increase of 50.0%", test);
+				+ " february was 200.0, \n which is a increase of 50.0%", test);
 		
 	}
 	
@@ -38,7 +38,7 @@ class BudgetCalculatorTest {
 			budget.earningsThisMonth(100);
 			String test = budget.showEarningsPerTwoMonths("january", "february");
 			assertEquals("Earnings for january was 200.0 and earnings for"
-					+ " february was 100.0, which is a decrease of 50.0%", test);
+					+ " february was 100.0, \n which is a decrease of 50.0%", test);
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ class BudgetCalculatorTest {
 		budget.earningsThisMonth(102);
 		String test = budget.showEarningsPerTwoMonths("january", "february");
 		assertEquals("Earnings for january was 100.0 and earnings for"
-				+ " february was 102.0, which is a increase of 98.03%", test);
+				+ " february was 102.0, \n which is a increase of 98.03%", test);
 	}
 	
 	@Test

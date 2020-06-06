@@ -21,6 +21,7 @@ import javax.swing.plaf.metal.OceanTheme;
 
 import budgetCalculator.BudgetGUI;
 import cardDeck.CardWindow;
+import collatzConjecture.CollatzConjecture;
 import factorialRecursion.FactorialMain;
 import fibSequence.FibSequenceGui;
 import headTails.HeadTails;
@@ -37,7 +38,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
 		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
 		NUMNAME, HEADTAILS, REVERSE, CLOSE, CARDS,
-		STOCK, BUDGET;
+		STOCK, BUDGET, COLLATZ;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -60,6 +61,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	NumberName numName = new NumberName();
 	HeadTails headOrTails = new HeadTails();
 	ReverseString reverse = new ReverseString();
+	CollatzConjecture coll = new CollatzConjecture();
 	//---------------------------------------------------------------------
 	@SuppressWarnings("deprecation")
 	
@@ -143,6 +145,7 @@ public class WindowMain extends JFrame implements ActionListener{
         JMenuItem miCard = new JMenuItem("Card Counter");
         JMenuItem miStock = new JMenuItem("Stock Query");
         JMenuItem miBudget = new JMenuItem("Budget Calculator");
+        JMenuItem miCollatz = new JMenuItem("Collatz Conjecture");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -160,6 +163,7 @@ public class WindowMain extends JFrame implements ActionListener{
         miCard.addActionListener(this);
         miStock.addActionListener(this);
         miBudget.addActionListener(this);
+        miCollatz.addActionListener(this);
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
         //---------------------------------------------------------------------
@@ -174,6 +178,7 @@ public class WindowMain extends JFrame implements ActionListener{
         m3.add(miCard);
         m3.add(miStock);
         m3.add(miBudget);
+        m3.add(miCollatz);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
@@ -269,6 +274,11 @@ public class WindowMain extends JFrame implements ActionListener{
 		  case "Budget Calculator":
 			  projectType = ProjectType.BUDGET;
 			  action(projectType, null);
+			  break;
+		  case "Collatz Conjecture":
+			  projectType = ProjectType.COLLATZ;
+			  action(projectType, null);
+			  break;
 		  default:
 			  t.setText("Welcome to the Main Menu");
 			  break;
@@ -394,6 +404,16 @@ public class WindowMain extends JFrame implements ActionListener{
 					 t.setText("Input a sentence and I'll reverse it");
 				 }
 				 	 
+				 break;
+			 case COLLATZ:
+				 try {
+					 coll.numSteps(Integer.valueOf(input));
+					 t.setText("your number " + input + " took exactly "
+					 + coll.getIncrementer() + " steps to reach 1 and " 
+					 + coll.getHighestNumber() + " was the largest value achieved");
+				 }catch (NumberFormatException e) {
+					 t.setText("Please input a number to calculate with");
+				 }
 				 break;
 			 case CARDS:
 				 @SuppressWarnings("unused") CardWindow cards = new CardWindow();
