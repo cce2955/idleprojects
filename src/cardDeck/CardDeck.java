@@ -14,9 +14,11 @@ public class CardDeck {
 	private int number;
 
 	public ArrayList<Card> makeFullDeck(){
-		
+		//Create two decks, one with all the cards
+		//Another deck to dump used cards into
 		ArrayList<Card> cards = new ArrayList<>();
 		ArrayList<Card> usedCard = new ArrayList<>();
+		//Clear the array if deck has to be rebuilt
 		cards.clear();
 		usedCard.clear();
 		

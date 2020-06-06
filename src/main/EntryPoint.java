@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 
-import stockTicker.StockTicker;
 import window.WindowMain;
 
 /*	So I'm getting a little burnt out on redux and I'm gonna have to grind at 

@@ -51,9 +51,6 @@ public class CardWindow extends JFrame implements ActionListener{
         } 
         catch (Exception e) { 
         } 
-//		numberCB.addActionListener(this);
-//		suitCB.addActionListener(this);
-		//Panel setup
 		combopanel.add(numberCB, BorderLayout.EAST);
 		combopanel.add(suitCB, BorderLayout.WEST);
 		textPanel.add(mainTextArea, BorderLayout.NORTH);
@@ -101,8 +98,6 @@ public class CardWindow extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				String suit = String.valueOf(suitCB.getSelectedItem());
 				String num = String.valueOf(numberCB.getSelectedItem());
-				StringBuilder text = new StringBuilder();
-				
 				if(deck.doesCardExist(num, suit)) {
 					mainTextArea.setText("Card " + num + " of " + suit + "s "
 							+ "has been drawn");

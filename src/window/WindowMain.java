@@ -26,6 +26,7 @@ import headTails.HeadTails;
 import legacy.UserInput;
 import numberName.NumberName;
 import reverseString.ReverseString;
+import stockTicker.StockTickerWindow;
 import textEditor.TextEditorMain;
 import vowelChecker.VowelCheckerGui;
 
@@ -34,7 +35,8 @@ import vowelChecker.VowelCheckerGui;
 public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
 		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
-		NUMNAME, HEADTAILS, REVERSE, CLOSE, CARDS;
+		NUMNAME, HEADTAILS, REVERSE, CLOSE, CARDS,
+		STOCK;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -138,6 +140,7 @@ public class WindowMain extends JFrame implements ActionListener{
         JMenuItem mi7 = new JMenuItem("Reverse A String");
         //Menu 3 items
         JMenuItem miCard = new JMenuItem("Card Counter");
+        JMenuItem miStock = new JMenuItem("Stock Query");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -153,6 +156,7 @@ public class WindowMain extends JFrame implements ActionListener{
         mi7.addActionListener(this);
         mi9.addActionListener(this);
         miCard.addActionListener(this);
+        miStock.addActionListener(this);
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
         //---------------------------------------------------------------------
@@ -165,6 +169,7 @@ public class WindowMain extends JFrame implements ActionListener{
         m2.add(mi6);
         m2.add(mi7);
         m3.add(miCard);
+        m3.add(miStock);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
@@ -232,6 +237,10 @@ public class WindowMain extends JFrame implements ActionListener{
 			  break;
 		  case "Heads or Tails?":
 			  projectType = ProjectType.HEADTAILS;
+			  action(projectType, null);
+			  break;
+		  case "Stock Query":
+			  projectType = ProjectType.STOCK;
 			  action(projectType, null);
 			  break;
 		  case "Debug":
@@ -381,6 +390,9 @@ public class WindowMain extends JFrame implements ActionListener{
 				 break;
 			 case CARDS:
 				 @SuppressWarnings("unused") CardWindow cards = new CardWindow();
+				 break;
+			 case STOCK:
+				 @SuppressWarnings("unused") StockTickerWindow stock = new StockTickerWindow();
 				 break;
 			 case DEBUG:	
 				 debugButton.setVisible(true);

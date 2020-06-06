@@ -85,6 +85,7 @@ public class StockTicker {
 		
 		return jsonArray;
 	}
+	
 private StringBuilder trimResults(String string) {
 	StringBuilder sb = new StringBuilder();
     sb.append(getApiOutput());
