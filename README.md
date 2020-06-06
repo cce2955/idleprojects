@@ -1,10 +1,15 @@
 # Purpose
 This is a little project I'm doing to test out my java skills, it utilizes Java FX to create a gui you can cycle through various projects
 
-# Currently Working on
+## Currently Working on
+##### Budget Calculator
+Input values for money earned and spent over a period of time, see a percentage change, may implement something to work on budget goals
+
+## Current Projects so far
+##### Stock Query
+Query a stock and gain information on it in real time. Utilizes GET requests and JSON parsing
 ##### Card Deck
 Creating a card deck the user can draw from, deck will be dynamically sized and the drawn card deck will reflect the draws.
-# Current Projects so far
 ##### Factorial Recursion
 A program that takes in an input and generates the factorial sum of the number
 ##### Fibonacci Sequence
