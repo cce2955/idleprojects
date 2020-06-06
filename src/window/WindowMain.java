@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 
+import budgetCalculator.BudgetGUI;
 import cardDeck.CardWindow;
 import factorialRecursion.FactorialMain;
 import fibSequence.FibSequenceGui;
@@ -36,7 +37,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	private enum ProjectType{
 		MAIN, DEBUG, FIB, VOWEL,TEXT, FACTORIAL,
 		NUMNAME, HEADTAILS, REVERSE, CLOSE, CARDS,
-		STOCK;
+		STOCK, BUDGET;
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -141,6 +142,7 @@ public class WindowMain extends JFrame implements ActionListener{
         //Menu 3 items
         JMenuItem miCard = new JMenuItem("Card Counter");
         JMenuItem miStock = new JMenuItem("Stock Query");
+        JMenuItem miBudget = new JMenuItem("Budget Calculator");
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         JMenuItem mDebug = new JMenuItem("Debug");
@@ -157,6 +159,7 @@ public class WindowMain extends JFrame implements ActionListener{
         mi9.addActionListener(this);
         miCard.addActionListener(this);
         miStock.addActionListener(this);
+        miBudget.addActionListener(this);
         //---------------------------------------------------------------------
         mDebug.addActionListener(this);
         //---------------------------------------------------------------------
@@ -170,6 +173,7 @@ public class WindowMain extends JFrame implements ActionListener{
         m2.add(mi7);
         m3.add(miCard);
         m3.add(miStock);
+        m3.add(miBudget);
 		//---------------------------------------------------------------------
         //---------------------------------------------------------------------
         m1.add(mDebug);
@@ -262,6 +266,9 @@ public class WindowMain extends JFrame implements ActionListener{
 			  projectType = ProjectType.CARDS;
 			  action(projectType, null);
 			  break;
+		  case "Budget Calculator":
+			  projectType = ProjectType.BUDGET;
+			  action(projectType, null);
 		  default:
 			  t.setText("Welcome to the Main Menu");
 			  break;
@@ -394,6 +401,8 @@ public class WindowMain extends JFrame implements ActionListener{
 			 case STOCK:
 				 @SuppressWarnings("unused") StockTickerWindow stock = new StockTickerWindow();
 				 break;
+			 case BUDGET:
+				 @SuppressWarnings("unused") BudgetGUI budget = new BudgetGUI();
 			 case DEBUG:	
 				 debugButton.setVisible(true);
 				 break;

@@ -1,5 +1,7 @@
 package budgetCalculator;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class BudgetCalculator {
@@ -8,23 +10,49 @@ public class BudgetCalculator {
 	//maybe do some extra calculations for budget goals or something
 	ArrayList<Double> arr = new ArrayList<>();
 	private boolean size;
+	private double percent;
+	private double monthEarningsPrimary;
+	private double monthEarningsSecondary;
+	
+	
 	public ArrayList<Double> earningsThisMonth(double deposit) {
 		arr.add(deposit);
 		setArr(arr);
 		return getArr();
 	}
-	/*
-	public String choice() {
-		return "you have " + availableMonths() + " available";
+	
+	public ArrayList<Double> resetEarnings(){
+		arr.clear();
+		setArr(arr);
+		return getArr();
 	}
-	*/
+	
+	public String choice() {
+		if(availableMonths() == 1) {
+			return "You have " + availableMonths() + " month available.";
+		}else {
+			return "You have " + availableMonths() + " months available.";
+		}
+		
+	}
+	
 	
 	public String showEarningsPerTwoMonths(String month1, String month2) {
 		if(!arr.isEmpty()) {	
+			//This is run early so I can find if there 
+			//is an increase or decrease
 			findPercentage(month1, month2);
-		return "Earnings for " + month1 + " was " + monthsEarnings(month1) + 
+			//A monolith of encapsulation here
+			//So we grab the month, turn it to a string value of 0,1,2,3,etc.
+			//That value corresponds to a section in the array
+			//Which is converted to a double
+			//Set to a setter
+		setMonthEarningsPrimary(Double.valueOf(arr.get(stringToMonth(month1))));
+		setMonthEarningsSecondary(Double.valueOf(arr.get(stringToMonth(month2))));
+		
+		return "Earnings for " + month1 + " was " + getMonthEarningsPrimary() + 
 				" and earnings for " + month2 + " was " 
-				+ monthsEarnings(month2) + ", which is a " + 
+				+ getMonthEarningsSecondary() + ", which is a " + 
 				increaseOrDecrease() + " of " + findPercentage(month1, month2)
 				+ "%";
 		//Calculation for percentage and calculation for determining
@@ -38,17 +66,19 @@ public class BudgetCalculator {
 		int num1 = stringToMonth(month1);
 		int num2 = stringToMonth(month2);
 		
-		double percent = 0;
+		//Find a size, smaller number/larger * 100 gives you a percentage
 		if (arr.get(num1) < arr.get(num2)) {
-			double check = 100.00/200;
-			double ten = 10.00/20;
-			percent =  (arr.get(num1)/arr.get(num2)) * 100.00 ;
+			setPercent((arr.get(num1)/arr.get(num2)) * 100.00) ;
 			setSize(true); //size is an increase
 		} else {
-			percent = 100 * (arr.get(num2)/arr.get(num1));
+			setPercent(percent = 100 * (arr.get(num2)/arr.get(num1)));
 			setSize(false);//Size is a decrease
 		}
-		return percent;
+		
+		DecimalFormat df2 = new DecimalFormat("#.##");
+		df2.setRoundingMode(RoundingMode.DOWN);
+		setPercent(Double.valueOf(df2.format(getPercent())));
+		return getPercent();
 	}
 	
 	private String increaseOrDecrease() {
@@ -58,10 +88,7 @@ public class BudgetCalculator {
 			return "decrease";
 		}
 	}
-	private double monthsEarnings (String month) {
-		double m1 = getArr().get(stringToMonth(month));
-		return m1;
-	}
+	
 	private int stringToMonth(String month) {
 		
 		switch (month.toLowerCase()) {
@@ -89,14 +116,22 @@ public class BudgetCalculator {
 				return 10;
 			case "december":
 				return 11;
-				default:
-					return 0;
+			default:
+				//This program in theory should never return 0
+				return 0;
 				//Just realized I could do this in a loop, too late
 		}
 	}
-	
-	private int availableMonths () {
-		return getArr().size();
+	private String monthToString(String month) {
+		return "";
+	}
+	public int availableMonths () {
+		if(!getArr().equals(null)) {
+			return getArr().size();
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	public ArrayList<Double> getArr() {
@@ -114,6 +149,31 @@ public class BudgetCalculator {
 	public void setSize(boolean size) {
 		this.size = size;
 	}
+
+	public double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(double percent) {
+		this.percent = percent;
+	}
+
+	public double getMonthEarningsPrimary() {
+		return monthEarningsPrimary;
+	}
+
+	public void setMonthEarningsPrimary(double monthEarningsPrimary) {
+		this.monthEarningsPrimary = monthEarningsPrimary;
+	}
+
+	public double getMonthEarningsSecondary() {
+		return monthEarningsSecondary;
+	}
+
+	public void setMonthEarningsSecondary(double monthEarningsSecondary) {
+		this.monthEarningsSecondary = monthEarningsSecondary;
+	}
+	
 	
 	
 	
