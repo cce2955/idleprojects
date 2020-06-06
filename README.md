@@ -2,10 +2,12 @@
 This is a little project I'm doing to test out my java skills, it utilizes Java FX to create a gui you can cycle through various projects
 
 ## Currently Working on
-##### Budget Calculator
-Input values for money earned and spent over a period of time, see a percentage change, may implement something to work on budget goals
 
 ## Current Projects so far
+##### Collatz Conjecture
+Implemented the collatz conjecture algorithm
+##### Budget Calculator
+Input values for money earned and spent over a period of time, see a percentage change, may implement something to work on budget goals
 ##### General Testing
 Added unit tests for 90% of the modules just to see how testing works, tests have guided me towards some edge cases.
 ##### Stock Query
