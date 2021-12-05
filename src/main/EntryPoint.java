@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 
+import chess.Chess;
 import sorter.ArraySorter;
 import window.WindowMain;
 
@@ -21,7 +22,9 @@ public class EntryPoint {
 	 	@SuppressWarnings("unused")
 		//WindowMain mainWindow = new WindowMain();
 	 	ArraySorter arrS = new ArraySorter();
-	 	
+	 	Chess chess = new Chess();
+	 	chess.start();
+	 	WindowMain main = new WindowMain();
 	 	arrS.testExample();
 	 	System.out.println(arrS.getArr());
 	 	arrS.bubbleSorterRecursion();

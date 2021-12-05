@@ -62,6 +62,7 @@ public class WindowMain extends JFrame implements ActionListener{
 	HeadTails headOrTails = new HeadTails();
 	ReverseString reverse = new ReverseString();
 	CollatzConjecture coll = new CollatzConjecture();
+	
 	//---------------------------------------------------------------------
 	@SuppressWarnings("deprecation")
 	
