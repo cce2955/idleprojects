@@ -27,6 +27,10 @@ public class Piece {
 		this.firstMove = firstMove;
 
 	}
+	/*
+	 * Find the potential movement of a piece with these two methods
+	 */
+	//Size is the size of the array
 	
 	public int getId() {
 		return id;
