@@ -29,6 +29,10 @@ public class Chess {
 		generateSpaces();
 		generateBoard();	
 		processInput(gameLogic());
+		
+		
+		
+		
 		//Closing a scanner so it doesn't throw null in any methods
 		Scanner sc = new Scanner(System.in);
 		sc.close();
