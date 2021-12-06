@@ -6,18 +6,20 @@ public class Piece {
 		WHITE, BLACK;
 	}
 	protected enum TYPE{
-			ROOK, PAWN, KNIGHT, BISHOP, QUEEN, KING;
+			DUMMY, ROOK, PAWN, KNIGHT, BISHOP, QUEEN, KING;
 	}
-	
+	private int id;
 	private int posX;
 	private int posY;
 	private COLOR color;
 	private TYPE type;
 	private boolean firstMove;
+	
 
 	
-	public Piece(int posX, int posY, Piece.COLOR color, Piece.TYPE type, boolean firstMove) {
+	public Piece(int id, int posX, int posY, Piece.COLOR color, Piece.TYPE type, boolean firstMove) {
 		super();
+		this.id = id;
 		this.posX = posX;
 		this.posY = posY;
 		this.color = color;
@@ -25,6 +27,15 @@ public class Piece {
 		this.firstMove = firstMove;
 
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getPosX() {
 		return posX;
 	}
@@ -55,10 +66,11 @@ public class Piece {
 	public void setFirstMove(boolean firstMove) {
 		this.firstMove = firstMove;
 	}
+
 	@Override
 	public String toString() {
-		return "Piece [posX=" + posX + ", posY=" + posY + ", color=" + color + ", type=" + type + ", firstMove="
-				+ firstMove + "]";
+		return "Piece [id=" + id + ", posX=" + posX + ", posY=" + posY + ", color=" + color + ", type=" + type
+				+ ", firstMove=" + firstMove + "]";
 	}
 	
 	

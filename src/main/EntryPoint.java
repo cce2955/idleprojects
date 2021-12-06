@@ -25,6 +25,7 @@ public class EntryPoint {
 	 	Chess chess = new Chess();
 	 	chess.start();
 	 	WindowMain main = new WindowMain();
+	 	/*
 	 	arrS.testExample();
 	 	System.out.println(arrS.getArr());
 	 	arrS.bubbleSorterRecursion();
@@ -33,7 +34,7 @@ public class EntryPoint {
 	 	System.out.println(arrS.getArr());
 	 	arrS.quickSorterRecursion();
 	 	System.out.println(arrS.getArr());
-	 	
+	 	*/
 	 	
 	 	
 	 	
