@@ -201,10 +201,16 @@ public class Chess {
 		spaceArr.clear();
 		return spaceArr;
 	}
+	@SuppressWarnings("unchecked")
 	private String displaySpaces (int ID) {
-		ArrayList<String> stringSpaceArr = new ArrayList<>();
+		ArrayList<ArrayList> stringSpaceArr = new ArrayList<>();
+		ArrayList<Integer> arrX = new ArrayList<>();
+		ArrayList<Integer> arrY = new ArrayList<>();
+		stringSpaceArr.add(arrX);
+		stringSpaceArr.add(arrY);
 		int x = pieceArr.get(ID).getPosX();
 		int y = pieceArr.get(ID).getPosY();
+		int increment = 0;
 		//XY factors out to an ID which can pin to a spot on the board,
 		//I don't know why I didn't do this instead of this crazy math
 		//You can find the current ID (and by extension the coordinates) of the isEmpty array by
@@ -216,10 +222,6 @@ public class Chess {
 		//This means I could refactor earlier code but mannn.....
 		//Let's try this
 		int pieceID = (((y * 8) + x));
-		System.out.println("X: " + x);
-		System.out.println("Y: " + y);
-		System.out.println("ID Generated: " + pieceID);
-		System.out.println(pieceArr.get(ID).getColor());
 		//Not to get to a spot on the board I just have to alter the variables to make it fit which I will detail
 		//In each type
 		if(pieceArr.get(ID).getType().equals(TYPE.PAWN)) {
@@ -227,16 +229,28 @@ public class Chess {
 			//So the Y coordinate only has to move once forward (for white) or backward (for black)
 			//Which means the ID has to be incremented or decremented by 8 once.
 			if(pieceArr.get(ID).getColor().equals(COLOR.WHITE)){
-				{
-					//White must be decremented by 8
-					System.out.println(isEmpty.size());
+				{	
 					for(int i = 0; i < isEmpty.size();i++) {
 						if(isEmpty.get(i).equals(true) && i == pieceID - 8) {
-							System.out.println(i + " taken");
-//							System.out.println("Space ID X: " + ((pieceID + 1) - x)/(8/y));
-//							System.out.println("Space ID Y: " + pieceArr.get(pieceID - 8).getPosY());
+							//This space is empty and can be occupied
+							//if ID is above 8, divide by 8 for Y
+							//Use remainder for X
+							if(pieceID > 8) {
+								//8 Gives us the exact spot, so we only have to decrement by Y once to move a space
+								if(pieceArr.get(ID).isFirstMove()) {
+									//First time movement a pawn gets two spaces.
+									stringSpaceArr.get(1).add((pieceID/8) - 2);
+									stringSpaceArr.get(0).add((pieceID % 8));
+								}
+								stringSpaceArr.get(1).add((pieceID/8) - 1);
+								stringSpaceArr.get(0).add((pieceID % 8));
+							}else {
+								stringSpaceArr.get(1).add(0);
+								stringSpaceArr.get(0).add(pieceID % 8);
+							}
+							System.out.println(i + " not taken");
 						}else {
-							System.out.println(i + " Not taken");
+							
 						}
 					}
 				}
@@ -285,12 +299,21 @@ public class Chess {
 				
 			}
 		}
-
-
-		return "";
+		
+		String fullString = " ";
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0;i < stringSpaceArr.get(0).size();i++) {
+			//Append available spaces to string builder and toss it into fullstring
+			sb.append("[" + gridSpacesY.get((int) stringSpaceArr.get(1).get(i)) + "" + stringSpaceArr.get(0).get(i) + "] "
+					);
+		}
+		fullString = "The available spaces for this " + pieceArr.get(ID).getType().toString().toLowerCase() + " is " + sb.toString();
+		System.out.println(fullString);
+		return fullString;
 	}
 	private int letterToNumber(String input) {
 		for(int i = 0; i < gridSpacesY.size(); i++) {
+			
 			
 			String upper = input.toUpperCase();
 			if(upper.subSequence(0, 1).equals(gridSpacesY.get(i))){

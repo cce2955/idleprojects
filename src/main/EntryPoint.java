@@ -24,8 +24,10 @@ public class EntryPoint {
 	 	ArraySorter arrS = new ArraySorter();
 	 	Chess chess = new Chess();
 	 	chess.start();
-	 	WindowMain main = new WindowMain();
 	 	/*
+	 	 * WindowMain main = new WindowMain();
+	 	
+	 	
 	 	arrS.testExample();
 	 	System.out.println(arrS.getArr());
 	 	arrS.bubbleSorterRecursion();
