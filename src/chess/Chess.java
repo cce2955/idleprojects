@@ -256,7 +256,29 @@ public class Chess {
 				}
 			}
 			if(pieceArr.get(ID).getColor().equals(COLOR.BLACK)){
-				
+				for(int i = 0; i < isEmpty.size();i++) {
+					if(isEmpty.get(i).equals(true) && i == pieceID + 8) {
+						//This space is empty and can be occupied
+						//if ID is above 8, divide by 8 for Y
+						//Use remainder for X
+						if(pieceID > 8) {
+							//8 Gives us the exact spot, so we only have to decrement by Y once to move a space
+							if(pieceArr.get(ID).isFirstMove()) {
+								//First time movement a pawn gets two spaces.
+								stringSpaceArr.get(1).add((pieceID/8) + 2);
+								stringSpaceArr.get(0).add((pieceID % 8));
+							}
+							stringSpaceArr.get(1).add((pieceID/8) + 1);
+							stringSpaceArr.get(0).add((pieceID % 8));
+						}else {
+							stringSpaceArr.get(1).add(0);
+							stringSpaceArr.get(0).add(pieceID % 8);
+						}
+						System.out.println(i + " not taken");
+					}else {
+						
+					}
+				}
 			}
 		}
 		if(pieceArr.get(ID).getType().equals(TYPE.ROOK)) {
