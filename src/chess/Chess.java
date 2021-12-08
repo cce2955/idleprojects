@@ -15,12 +15,17 @@ public class Chess {
 	private Board board = new Board(8, 8, PLAYERCOLOR.WHITE);
 	//Array to hold pieces
 	private ArrayList<Piece> pieceArr = new ArrayList<>();
+	//Hold potential moves the user can make
+	private ArrayList<String> moveArr =new ArrayList<>();
+	//Along with the choices, set up potential IDs for the new spaces so pieces can be set with the array.
+	private ArrayList<Integer> potentialIDArr = new ArrayList<>();
 	//This will be the global ID of the piece the user is currently utilizing
 	private int id= 0;
 	public void start() {	
 		generatePieces();
 		updateBoard(board.getHorizontalLength(), board.getVerticalLength());
 		gameLogic();
+		updateBoard(board.getHorizontalLength(), board.getVerticalLength());
 		sc.close();
 	}
 	
@@ -65,13 +70,31 @@ public class Chess {
 		}
 		choice = sc.nextLine();
 		if(choice.length() == 2) {
-			potentialMoves(choice);
+			System.out.println(pieceMovement(potentialMoves(choice)));
 		}else {
 			System.out.println("Sorry that's not a valid piece, please try again");
 			gameLogic();
 		}
 		
+		choice = sc.nextLine();
+		String lambdaChoice = choice.toUpperCase();
+		moveArr.forEach(item -> {
+			
+			if (lambdaChoice.equals(item)) {
+				
+				//If choice is correct, change the ID so the position of the piece will change.
+				//Also clear the old space and make it empty
+				//Make the new space occupied
+				int oldID = id;
+				pieceArr.get(id).setId(potentialMoves(item));
+				board.spaceIDArr.get(oldID).setOccupied(false);
+				board.spaceIDArr.get(id).setOccupied(true);
+				
+			}
+		});
+		
 		}
+	
 	private String availableUnits(TYPE type) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Your available units are: ");
@@ -88,8 +111,9 @@ public class Chess {
 		sb.append("\nWhich one would you like to move?");
 		return sb.toString();
 	}
-	private String potentialMoves(String input) {
+	private int potentialMoves(String input) {
 		//Calculate input and find the ID from the input
+		id = 0;
 		int x = 0;
 		int y = 0;
 		try {
@@ -132,16 +156,53 @@ public class Chess {
 		
 		//Finds the exact ID of the piece we're using
 		id = (x * 8) + y;
-		pieceMovement(id);
-		return "";
+		return id;
 	}
 	
 	private String pieceMovement(int ID) {
-	
-		return "";
+		StringBuilder sb = new StringBuilder();
+		//Empty move array 
+		moveArr.clear();
+		sb.delete(0, sb.length());
+		sb.append("Your available moves are: ");
+		switch(pieceArr.get(ID).getType()) {
+		case PAWN:
+			//Pretty straight forward, your only options is the space in front of you or if it's the first turn
+			//The first and second space
+			try {
+				if(!board.spaceIDArr.get(ID + 8).isOccupied()) {
+					if(board.playerColor == PLAYERCOLOR.WHITE) {	
+						sb.append(" [" + board.letterSpaces((ID/8) + 1) + ((ID % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8) + 1) + ((ID % 8)));
+						potentialIDArr.add(((ID/8)+1) + (ID % 8));
+					}else {
+						sb.append(" [" + board.letterSpaces((ID/8) -1 ) + ((ID % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8) - 1) + ((ID % 8)));
+						potentialIDArr.add(((ID/8)-1) + (ID % 8));
+					}
+				}
+				//This space should never be occupied but may as well be safe
+				if(pieceArr.get(ID).isFirstMove() && !board.spaceIDArr.get(ID + 16).isOccupied()) {
+					if(board.playerColor == PLAYERCOLOR.WHITE) {
+						sb.append(" [" + board.letterSpaces((ID/8) + 2) + ((ID % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8) + 2) + ((ID % 8)));
+					}else {
+						sb.append(" [" + board.letterSpaces((ID/8) -1 ) + ((ID % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8) - 1) + ((ID % 8)));
+					}
+				}	
+			}catch (IndexOutOfBoundsException e) {
+				System.out.println("There are no spaces available");
+			}
+			
+			break;
+		default:
+			break;
+		}
+		return sb.toString();
 	}
 	private void generatePieces() {
-		for(int i = 0; i < 64; i++) {
+		for(int i = 0; i < board.horizontalLength* board.verticalLength; i++) {
 			//There probably is a way to do this via an algorithm which will infuriate me at day's end but
 			//I'm gonna hard code these values for now
 			if(i >= 8 && i <= 15) {
@@ -181,7 +242,19 @@ public class Chess {
 			if(i ==60) {
 				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.KING, true, false));
 			}
-
+			try {
+				if(pieceArr.get(i).getId() == board.spaceIDArr.get(i).spaceID) {
+					//Flip a space on the grid as occupied if a piece is added to this ID
+					//This can be used to scan for collisions during a movement check 
+					board.spaceIDArr.get(i).occupied = true;
+				}else {
+					//Likewise, free up a space if nothing is there
+					board.spaceIDArr.get(i).occupied = false;
+				}
+			}catch(IndexOutOfBoundsException e) {
+				
+			}
+			
 		}
 
 	}
