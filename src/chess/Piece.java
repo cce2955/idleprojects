@@ -14,22 +14,30 @@ public class Piece {
 	private COLOR color;
 	private TYPE type;
 	private boolean firstMove;
-	
+	private boolean defeated;
 
 	
-	public Piece(int id, Piece.COLOR color, Piece.TYPE type, boolean firstMove) {
+	public Piece(int id, Piece.COLOR color, Piece.TYPE type, boolean firstMove, boolean defeated) {
 		super();
 		this.id = id;
 		this.color = color;
 		this.type = type;
 		this.firstMove = firstMove;
+		this.defeated = defeated;
 
 	}
-	/*
-	 * Find the potential movement of a piece with these two methods
-	 */
-	//Size is the size of the array
 	
+	
+	public boolean isDefeated() {
+		return defeated;
+	}
+
+
+	public void setDefeated(boolean defeated) {
+		this.defeated = defeated;
+	}
+
+
 	public int getId() {
 		return id;
 	}

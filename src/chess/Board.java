@@ -8,16 +8,19 @@ public class Board {
 	ArrayList<Space> spaceIDArr = new ArrayList<>();
 	int horizontalLength;
 	int verticalLength;
-	
-	
+	enum PLAYERCOLOR{
+		WHITE, BLACK;
+	}
+	PLAYERCOLOR playerColor;
 	/**
 	 * @param horizontalLength
 	 * @param verticalLength
 	 */
-	public Board(int horizontalLength, int verticalLength) {
+	public Board(int horizontalLength, int verticalLength, PLAYERCOLOR playerColor) {
 		super();
 		this.horizontalLength = horizontalLength;
 		this.verticalLength = verticalLength;
+		this.playerColor = playerColor;
 		for(int i= 0; i < horizontalLength *verticalLength; i++) {
 			//Generate space IDs to be used in board
 			//Board will be slicedd using horizontal length
@@ -48,6 +51,8 @@ public class Board {
 				return "Error";
 		}
 	}
+	
+
 	public int getHorizontalLength() {
 		return horizontalLength;
 	}
