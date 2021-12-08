@@ -17,11 +17,9 @@ public class Piece {
 	
 
 	
-	public Piece(int id, int posX, int posY, Piece.COLOR color, Piece.TYPE type, boolean firstMove) {
+	public Piece(int id, Piece.COLOR color, Piece.TYPE type, boolean firstMove) {
 		super();
 		this.id = id;
-		this.posX = posX;
-		this.posY = posY;
 		this.color = color;
 		this.type = type;
 		this.firstMove = firstMove;

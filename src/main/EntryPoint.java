@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 
 import chess.Chess;
+
 import sorter.ArraySorter;
 import window.WindowMain;
 
