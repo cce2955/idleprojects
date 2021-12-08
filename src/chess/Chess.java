@@ -12,11 +12,11 @@ import chess.Piece.TYPE;
 public class Chess {
 	Scanner sc = new Scanner(System.in);
 	//Standard 8x8 board
-	Board board = new Board(8, 8, PLAYERCOLOR.WHITE);
+	private Board board = new Board(8, 8, PLAYERCOLOR.WHITE);
 	//Array to hold pieces
-	ArrayList<Piece> pieceArr = new ArrayList<>();
+	private ArrayList<Piece> pieceArr = new ArrayList<>();
 	//This will be the global ID of the piece the user is currently utilizing
-	int id= 0;
+	private int id= 0;
 	public void start() {	
 		generatePieces();
 		updateBoard(board.getHorizontalLength(), board.getVerticalLength());
@@ -24,7 +24,7 @@ public class Chess {
 		sc.close();
 	}
 	
-	public void gameLogic() {
+	private void gameLogic() {
 
 		System.out.println();
 		System.out.println("Which piece are you moving?(P or Pawn for Pawn, etc.)");
@@ -72,7 +72,7 @@ public class Chess {
 		}
 		
 		}
-	public String availableUnits(TYPE type) {
+	private String availableUnits(TYPE type) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Your available units are: ");
 		pieceArr.forEach(piece ->{
@@ -88,7 +88,7 @@ public class Chess {
 		sb.append("\nWhich one would you like to move?");
 		return sb.toString();
 	}
-	public String potentialMoves(String input) {
+	private String potentialMoves(String input) {
 		//Calculate input and find the ID from the input
 		int x = 0;
 		int y = 0;
@@ -132,13 +132,15 @@ public class Chess {
 		
 		//Finds the exact ID of the piece we're using
 		id = (x * 8) + y;
+		pieceMovement(id);
 		return "";
 	}
 	
-	public String pieceMovement() {
-		
+	private String pieceMovement(int ID) {
+	
+		return "";
 	}
-	public void generatePieces() {
+	private void generatePieces() {
 		for(int i = 0; i < 64; i++) {
 			//There probably is a way to do this via an algorithm which will infuriate me at day's end but
 			//I'm gonna hard code these values for now
@@ -183,7 +185,7 @@ public class Chess {
 		}
 
 	}
-	public void updateBoard (int length, int width) {
+	private void updateBoard (int length, int width) {
 		boolean isEmpty = true;
 		for(int i = 0; i < length * width; i++) {
 			//After X amount of iterations break the grid by a line 
