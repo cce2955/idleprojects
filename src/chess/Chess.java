@@ -65,39 +65,44 @@ public class Chess {
 				break;
 			default:
 				//Force into loop if bad input
-				System.out.println("Sorry that's not a valid piece, tyoe in the correct name or the first letter (ex. Pawn or P for Pawns)");
+				System.out.println("Sorry that's not a valid piece, type in the correct name or the first letter (ex. Pawn or P for Pawns)");
 				gameLogic();
 		}
 		choice = sc.nextLine();
 		if(choice.length() == 2) {
-			System.out.println(pieceMovement(potentialMoves(choice)));
+			System.out.print("Your available units are: " + pieceMovement(potentialMoves(choice)));
 		}else {
 			System.out.println("Sorry that's not a valid piece, please try again");
 			gameLogic();
 		}
 		
-		choice = sc.nextLine();
-		String lambdaChoice = choice.toUpperCase();
-		moveArr.forEach(item -> {
-			
-			if (lambdaChoice.equals(item)) {
-				
-				//If choice is correct, change the ID so the position of the piece will change.
-				//Also clear the old space and make it empty
-				//Make the new space occupied
-				int oldID = id;
-				pieceArr.get(id).setId(potentialMoves(item));
-				board.spaceIDArr.get(oldID).setOccupied(false);
-				board.spaceIDArr.get(id).setOccupied(true);
-				
-			}
-		});
 		
+		if(!moveArr.isEmpty()) {
+			choice = sc.nextLine();
+			String lambdaChoice = choice.toUpperCase();
+			
+			moveArr.forEach(item -> {
+				
+				if (lambdaChoice.equals(item)) {
+					
+					
+					//If choice is correct, change the ID so the position of the piece will change.
+					//Also clear the old space and make it empty
+					//Make the new space occupied
+					int oldID = id;
+					pieceArr.get(id).setId(potentialMoves(item));
+					board.spaceIDArr.get(oldID).setOccupied(false);
+					board.spaceIDArr.get(id).setOccupied(true);
+					
+				}
+			});
+		} else {
+			System.out.println("[No Spaces Available]");
 		}
+				}
 	
 	private String availableUnits(TYPE type) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Your available units are: ");
 		pieceArr.forEach(piece ->{
 			if(piece.getType() == type && piece.isDefeated() == false) {
 				//This is a very stupid and unsafe way to do this, which is why I'm doing it
@@ -164,7 +169,6 @@ public class Chess {
 		//Empty move array 
 		moveArr.clear();
 		sb.delete(0, sb.length());
-		sb.append("Your available moves are: ");
 		switch(pieceArr.get(ID).getType()) {
 		case PAWN:
 			//Pretty straight forward, your only options is the space in front of you or if it's the first turn
@@ -196,7 +200,71 @@ public class Chess {
 			}
 			
 			break;
+		case BISHOP:
+			//Check if every 7 and 9th space is occupied, if occupied, below 0 or above 63, stop
+			int northeastIncrement = pieceArr.get(ID).getId();
+			int northwestIncrement = pieceArr.get(ID).getId();
+			int southeastIncrement = pieceArr.get(ID).getId();
+			int southwestIncrement = pieceArr.get(ID).getId();
+			while (northwestIncrement >= 0) {
+				//Check northwest of the piece
+				northwestIncrement = northwestIncrement - 9;
+				try {
+					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+						break;
+					}else {
+						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
+					}
+				}catch(IndexOutOfBoundsException e) {
+					break;
+				}
+			}
+			while (northeastIncrement >= 0) {
+				//Check northeast of the piece
+				northwestIncrement = northwestIncrement - 7;
+				try {
+					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+						break;
+					}else {
+						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8) ) + ((ID % 8)));
+					}
+				}catch(IndexOutOfBoundsException e) {
+					break;
+				}
+			}
+			while (southeastIncrement <= 63) {
+				//Check northeast of the piece
+				northwestIncrement = northwestIncrement + 7;
+				try {
+					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+						break;
+					}else {
+						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
+					}
+				}catch(IndexOutOfBoundsException e) {
+					break;
+				}
+			}
+			while (southwestIncrement <= 63) {
+				//Check northeast of the piece
+				northwestIncrement = northwestIncrement + 9;
+				try {
+					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+						break;
+					}else {
+						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
+					}
+				}catch(IndexOutOfBoundsException e) {
+					break;
+				}
+			}
+			break;
 		default:
+			System.out.println("Function not yet implemented");
 			break;
 		}
 		return sb.toString();
