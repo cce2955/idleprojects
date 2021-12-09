@@ -80,7 +80,7 @@ public class Chess {
 		if(!moveArr.isEmpty()) {
 			choice = sc.nextLine();
 			String lambdaChoice = choice.toUpperCase();
-			
+			System.out.println(id);
 			moveArr.forEach(item -> {
 				
 				if (lambdaChoice.equals(item)) {
@@ -89,6 +89,7 @@ public class Chess {
 					//If choice is correct, change the ID so the position of the piece will change.
 					//Also clear the old space and make it empty
 					//Make the new space occupied
+					
 					int oldID = id;
 					pieceArr.get(id).setId(potentialMoves(item));
 					board.spaceIDArr.get(oldID).setOccupied(false);
@@ -202,10 +203,10 @@ public class Chess {
 			break;
 		case BISHOP:
 			//Check if every 7 and 9th space is occupied, if occupied, below 0 or above 63, stop
-			int northeastIncrement = pieceArr.get(ID).getId();
-			int northwestIncrement = pieceArr.get(ID).getId();
-			int southeastIncrement = pieceArr.get(ID).getId();
-			int southwestIncrement = pieceArr.get(ID).getId();
+			int northeastIncrement = ID;
+			int northwestIncrement = ID;
+			int southeastIncrement = ID;
+			int southwestIncrement = ID;
 			while (northwestIncrement >= 0) {
 				//Check northwest of the piece
 				northwestIncrement = northwestIncrement - 9;
@@ -215,33 +216,40 @@ public class Chess {
 					}else {
 						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
 						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
+						
 					}
 				}catch(IndexOutOfBoundsException e) {
 					break;
 				}
 			}
 			while (northeastIncrement >= 0) {
-				//Check northeast of the piece
-				northwestIncrement = northwestIncrement - 7;
+				//Check northwest of the piece
+				northeastIncrement = northeastIncrement - 7;
 				try {
-					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+					if(board.spaceIDArr.get(northeastIncrement).isOccupied()) {
 						break;
 					}else {
-						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
-						moveArr.add(board.letterSpaces((ID/8) ) + ((ID % 8)));
+						sb.append(" [" + board.letterSpaces((northeastIncrement/8)) + ((northeastIncrement % 8) + "] "));
+						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
 					}
 				}catch(IndexOutOfBoundsException e) {
 					break;
 				}
 			}
 			while (southeastIncrement <= 63) {
-				//Check northeast of the piece
-				northwestIncrement = northwestIncrement + 7;
+				//Check northwest of the piece
+				southeastIncrement = southeastIncrement + 7;
 				try {
-					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+					if(board.spaceIDArr.get(southeastIncrement).isOccupied()) {
 						break;
 					}else {
-						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
+						//When we reach the left side of the board then bail
+						if(southeastIncrement % 8 == 0) {
+							sb.append(" [" + board.letterSpaces((southeastIncrement/8)) + ((southeastIncrement % 8) + "] "));
+							moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
+							break;
+						}
+						sb.append(" [" + board.letterSpaces((southeastIncrement/8)) + ((southeastIncrement % 8) + "] "));
 						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
 					}
 				}catch(IndexOutOfBoundsException e) {
@@ -249,13 +257,17 @@ public class Chess {
 				}
 			}
 			while (southwestIncrement <= 63) {
-				//Check northeast of the piece
-				northwestIncrement = northwestIncrement + 9;
+				//Check northwest of the piece
+				southwestIncrement = southwestIncrement + 9;
 				try {
-					if(board.spaceIDArr.get(northwestIncrement).isOccupied()) {
+					if(board.spaceIDArr.get(southwestIncrement).isOccupied()) {
 						break;
 					}else {
-						sb.append(" [" + board.letterSpaces((northwestIncrement/8)) + ((northwestIncrement % 8) + "] "));
+						//When we reach the right side of the board then bail
+						if(southwestIncrement % 8 == 0) {
+							break;
+						}
+						sb.append(" [" + board.letterSpaces((southwestIncrement/8)) + ((southwestIncrement % 8) + "] "));
 						moveArr.add(board.letterSpaces((ID/8)) + ((ID % 8)));
 					}
 				}catch(IndexOutOfBoundsException e) {
@@ -273,43 +285,43 @@ public class Chess {
 		for(int i = 0; i < board.horizontalLength* board.verticalLength; i++) {
 			//There probably is a way to do this via an algorithm which will infuriate me at day's end but
 			//I'm gonna hard code these values for now
-			if(i >= 8 && i <= 15) {
-				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.PAWN, true, false));
-			}
-			if(i >= 48 && i <= 55) {
-				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.PAWN, true, false));
-			}
-			if(i == 0 || i ==7) {
-				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.ROOK, true, false));
-			}
-			if(i == 56 || i ==63) {
-				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.ROOK, true, false));
-			}
-			if(i == 1 || i == 6) {
-				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.KNIGHT, true, false));
-			}
-			if(i == 57 || i == 62) {
-				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.KNIGHT, true, false));
-			}
+//			if(i >= 8 && i <= 15) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.PAWN, true, false));
+//			}
+//			if(i >= 48 && i <= 55) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.PAWN, true, false));
+//			}
+//			if(i == 0 || i ==7) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.ROOK, true, false));
+//			}
+//			if(i == 56 || i ==63) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.ROOK, true, false));
+//			}
+//			if(i == 1 || i == 6) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.KNIGHT, true, false));
+//			}
+//			if(i == 57 || i == 62) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.KNIGHT, true, false));
+//			}
 			if(i == 2 || i == 5) {
 				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.BISHOP, true, false));
 			}
 			if(i == 58 || i == 61) {
 				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.BISHOP, true, false));
 			}
-
-			if(i ==3) {
-				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.QUEEN, true, false));
-			}
-			if(i ==4) {
-				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.KING, true, false));
-			}
-			if(i ==59) {
-				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.QUEEN, true, false));
-			}
-			if(i ==60) {
-				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.KING, true, false));
-			}
+//
+//			if(i ==3) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.QUEEN, true, false));
+//			}
+//			if(i ==4) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.WHITE, Piece.TYPE.KING, true, false));
+//			}
+//			if(i ==59) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.QUEEN, true, false));
+//			}
+//			if(i ==60) {
+//				pieceArr.add(new Piece(i, Piece.COLOR.BLACK, Piece.TYPE.KING, true, false));
+//			}
 			try {
 				if(pieceArr.get(i).getId() == board.spaceIDArr.get(i).spaceID) {
 					//Flip a space on the grid as occupied if a piece is added to this ID
